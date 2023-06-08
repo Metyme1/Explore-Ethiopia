@@ -1,3 +1,4 @@
+import 'package:ethiopia/pages/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,10 @@ class ExploreButton extends StatelessWidget {
 
               // Image.asset("img/")
               ElevatedButton(onPressed: (){
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage(),)
+                );
               },
                 child: Text(">>>>"),
 

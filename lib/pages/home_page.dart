@@ -1,8 +1,11 @@
+import 'package:ethiopia/pages/main_page.dart';
 import 'package:ethiopia/widget/app_large_text.dart';
 import 'package:ethiopia/widget/app_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../widget/bottomNavigationBar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
  var images ={
-     "flight.jpg":"booking",
+     "gallery.jpeg":"Gallery",
      "event.jpg":"event",
      "cloths.jpg":"cloth",
  };
@@ -22,6 +25,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController =TabController(length: 4, vsync: this);
     return Scaffold(
+      bottomNavigationBar: BottomNavBar(),
         body: SingleChildScrollView(
             child:Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                   child: Row(
                     children: [
-                      Icon(Icons.home , size: 50, color:Colors.lightGreen),
+                      Icon(Icons.arrow_back , size: 40, color:Colors.brown),
                       Expanded (child: Container()),
                       Container(
                         width:50,
@@ -182,7 +186,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       itemBuilder:(_,index){
 
                     return Container(
-                      margin: const EdgeInsets.only(right: 30),
+                      margin: const EdgeInsets.only(right: 10),
                       child: Column(
                         children: [
                       Container(
@@ -190,7 +194,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       width:80,
                       height:80,
                       decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                       image:DecorationImage(
                       image:AssetImage(
@@ -211,7 +215,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                               child: AppText(text:images.values.elementAt(index
                              ),
-                                  color: Colors.lightGreen,
+                                  color: Colors.black,
 
                               ),
                             ),
@@ -231,29 +235,3 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   }
 }
-
-// class CircleTabIndicator extends Decoration{
-// final Color color;
-// double radius;
-// CircleTabIndicator({required this.color , required this.radius});
-//   @override
-//   BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-//     // TODO: implement createBoxPainter
-//    return _CirclePainter(color:color, radius:radius);
-//   }
-// }
-//
-// class _CirclePainter extends BoxPainter{
-//   @override
-//   final Color color;
-//   double radius;
-//   _CirclePainter({required this.color, required this.radius});
-//   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-//     Paint _paint=Paint();
-//     _paint.color=color;
-//     _paint.isAntiAlias=true;
-//     final Offset CircleOffset=Offset(configuration.size!.width/2-radius/2,configuration.size!.height-radius/2);
-//     canvas.drawCircle(offset+CircleOffset, radius, _paint);
-//   }
-//
-// }

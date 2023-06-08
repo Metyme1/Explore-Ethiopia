@@ -1,9 +1,11 @@
-
 import 'package:ethiopia/pages/calender.dart';
 import 'package:ethiopia/pages/detail_page.dart';
+import 'package:ethiopia/pages/gallery.dart';
 import 'package:ethiopia/pages/home_page.dart';
 import 'package:ethiopia/pages/main_page.dart';
+import 'package:ethiopia/pages/map.dart';
 import 'package:ethiopia/pages/signup_login.dart';
+import 'package:ethiopia/pages/trip_booking.dart';
 import 'package:ethiopia/widget/explore.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
 
           primarySwatch: Colors.blue,
         ),
-        home:HomePage(),
+        home:Explore(),
     );
   }
 }
