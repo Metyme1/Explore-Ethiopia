@@ -5,14 +5,14 @@ import 'package:ethiopia/widget/explore_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Explore extends StatefulWidget {
-  const Explore({Key? key}) : super(key: key);
+class Welcome extends StatefulWidget {
+  const Welcome({Key? key}) : super(key: key);
 
   @override
-  State<Explore> createState() => _ExploreState();
+  State<Welcome> createState() => _WelcomeState();
 }
 
-class _ExploreState extends State<Explore> {
+class _WelcomeState extends State<Welcome> {
   final String _image = "images/11.jpg";
 
   @override

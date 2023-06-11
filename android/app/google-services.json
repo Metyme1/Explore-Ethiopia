@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "601039604661",
+    "project_id": "login-signup-e54ca",
+    "storage_bucket": "login-signup-e54ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601039604661:android:4770d25dfc9d3be1a127fc",
+        "android_client_info": {
+          "package_name": "com.example.ethiopia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601039604661-qhr7lpb1t88d1fiel9fsatk1kf99roht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVB7EGOt2mEw0z4hIx0R_YUoyroz7URQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601039604661-qhr7lpb1t88d1fiel9fsatk1kf99roht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

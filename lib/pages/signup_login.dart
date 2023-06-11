@@ -1,10 +1,13 @@
+import 'package:ethiopia/pages/detail_page.dart';
 import 'package:ethiopia/widget/app_large_text.dart';
 import 'package:ethiopia/widget/app_text.dart';
 import 'package:ethiopia/widget/appbutton.dart';
 import 'package:ethiopia/widget/explore_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'book_trip.dart';
+
 
 class SignLogin extends StatefulWidget {
   const SignLogin({Key? key}) : super(key: key);
@@ -122,10 +125,13 @@ class _SignLoginState extends State<SignLogin> {
               SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Login(),)
-                  );
+                FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text).then((value){
+                  print("created new account");
+                  Navigator.push(context,
+                  MaterialPageRoute(builder: (context)=>Login()));
+                }).onError((error, stackTrace) {
+                  print("error ${error.toString()}");
+                });
                 },
                 child: Text('Sign Up'),
                 style: ButtonStyle(
@@ -267,10 +273,15 @@ class _LoginState extends State<Login> {
                         SizedBox(height: 50.0),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => BookTrip(),)
-                            );
+                            FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text).then((value){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => TripPage()));
+                              }).onError((error, stackTrace) {
+                                print("error${error.toString()}");
+                            });
+
+
                           },
                           child: Text('Login'),
                           style: ButtonStyle(
