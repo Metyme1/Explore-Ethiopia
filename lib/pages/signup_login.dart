@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
+import 'Auth.dart';
+
 
 
 class SignLogin extends StatefulWidget {
@@ -17,6 +19,14 @@ class SignLogin extends StatefulWidget {
 }
 
 class _SignLoginState extends State<SignLogin> {
+
+  String? _userId = UserManager.userId;
+
+  @override
+  void initState() {
+    super.initState();
+    UserManager.getCurrentUser();
+  }
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -127,10 +137,13 @@ class _SignLoginState extends State<SignLogin> {
                 onPressed: () {
                 FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text).then((value){
                   print("created new account");
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context)=>Login()));
-                }).onError((error, stackTrace) {
-                  print("error ${error.toString()}");
+                  print(_userId);
+
+                 //  Navigator.push(context,
+                 //   MaterialPageRoute(builder: (context)=>Login()));
+                 // }).onError((error, stackTrace) {
+                 //  print("error ${error.toString()}");
+
                 });
                 },
                 child: Text('Sign Up'),
@@ -145,6 +158,7 @@ class _SignLoginState extends State<SignLogin> {
                 ),
 
               ),
+
                 SizedBox(
                   height: 30,
                 ),
@@ -185,6 +199,14 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  String? _userId = UserManager.userId;
+
+  @override
+  void initState() {
+    super.initState();
+    UserManager.getCurrentUser();
+  }
+
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -274,9 +296,12 @@ class _LoginState extends State<Login> {
                         ElevatedButton(
                           onPressed: () {
                             FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text).then((value){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => TripPage()));
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(builder: (context) => TripPage())
+                              //
+                              //     );
+                              Text('User ID: $_userId');
                               }).onError((error, stackTrace) {
                                 print("error${error.toString()}");
                             });

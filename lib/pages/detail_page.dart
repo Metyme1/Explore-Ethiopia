@@ -1,4 +1,7 @@
+import 'package:ethiopia/cubit/app_cubit.dart';
+import 'package:ethiopia/cubit/app_cubit_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:math';
 
 import 'package:intl/intl.dart';
@@ -15,6 +18,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<AppCubits, CubitStates>(builder: (context ,state){
+      DetailState detail = state as DetailState;
     return Scaffold(
       bottomNavigationBar: const BottomAppBar(),
       body: Container(
@@ -28,7 +33,9 @@ class _DetailPageState extends State<DetailPage> {
               child: Row(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      BlocProvider.of<AppCubits>(context).goHome();
+                    },
                     icon: Icon(Icons.menu),
                     color: Colors.white,
                   )
@@ -43,7 +50,7 @@ class _DetailPageState extends State<DetailPage> {
                 height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/welcome-1.jpg"),
+                    image:NetworkImage(""+detail.place.img),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -69,11 +76,11 @@ class _DetailPageState extends State<DetailPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Gonder",
+                          "Gonder",//detail.place.name
                           style: TextStyle(color: Colors.black54, fontSize: 30),
                         ),
                         Text(
-                          "\$ 250",
+                          "\$ 250",// "\$"+detail.place.price.toString
                           style: TextStyle(color: Colors.black, fontSize: 30),
                         ),
                       ],
@@ -88,7 +95,7 @@ class _DetailPageState extends State<DetailPage> {
                           color: Colors.black,
                         ),
                         Text(
-                          "Gonder, Ethiopia",
+                          "Gonder, Ethiopia",//detail.place.location
                           style: TextStyle(color: Colors.black, fontSize: 20),
                         ),
                       ],
@@ -103,8 +110,8 @@ class _DetailPageState extends State<DetailPage> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "This is the most incredible place I have ever seen in my life.",
+                    Text( // det
+                      "This is the most incredible place I have ever seen in my life.",// detail.place.description
                       style: TextStyle(color: Colors.black, fontSize: 18),
                     ),
                     SizedBox(height: 25),
@@ -183,10 +190,10 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
-  }
+  });
 }
 
-
+}
 
 
 class TripPage extends StatefulWidget {

@@ -11,15 +11,12 @@ import 'package:ethiopia/pages/my_page.dart';
 import 'package:ethiopia/pages/signup_login.dart';
 import 'package:ethiopia/pages/trip_booking.dart';
 import 'package:ethiopia/pages/explore.dart';
+import 'package:ethiopia/services/data_services..dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-//
-// Future main() async{
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-// }
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,11 +35,12 @@ class MyApp extends StatelessWidget {
 
           primarySwatch: Colors.blue,
         ),
-        home:SignLogin()
-        // BlocProvider<AppCubits>(
-        //   create: (context)=>AppCubits(),
-        //   child: AppCubitLogics(),
-        // )
+        home: BlocProvider<AppCubits>(
+          create: (context)=>AppCubits(
+            data: DataServices(),
+          ),
+          child: AppCubitLogics(),
+        )
     );
   }
 }

@@ -1,9 +1,11 @@
+import 'package:ethiopia/cubit/app_cubit.dart';
 import 'package:ethiopia/pages/main_page.dart';
 import 'package:ethiopia/widget/app_large_text.dart';
 import 'package:ethiopia/widget/app_text.dart';
 import 'package:ethiopia/widget/explore_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -58,24 +60,34 @@ class _WelcomeState extends State<Welcome> {
                     ),
                   ),
                   SizedBox(height: 40),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MainPage(),)
-                        );
-                      },
+                  GestureDetector(
+                    onTap: (){
+                      BlocProvider.of<AppCubits>(context).getData();
+                    },
+                    child: Container(
+                      width: 200,
+                      child: Row(
+                        children: [ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => MainPage(),)
+                              );
+                            },
 
-                      child: Text("Explore more"),
-                      style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+                            child: Text("Explore more"),
+                            style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(30.0),
                 ),
               ),
               fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
             ),
+                        ),]
+                      ),
+                    ),
                   )
                 ],
               ),
