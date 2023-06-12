@@ -37,6 +37,8 @@ dependencies:
 
 # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
+  cloudinary: ^1.1.2
+  cloudinary_flutter: ^0.9.0
   firebase_core: ^2.13.1
   firebase_storage: ^11.2.2
   file_picker: ^5.3.2
@@ -74,7 +76,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/
+    - images/welcome/
+    - images/categories/Hist&cal/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

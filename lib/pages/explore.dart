@@ -1,21 +1,19 @@
-import 'package:ethiopia/cubit/app_cubit.dart';
 import 'package:ethiopia/pages/main_page.dart';
 import 'package:ethiopia/widget/app_large_text.dart';
 import 'package:ethiopia/widget/app_text.dart';
 import 'package:ethiopia/widget/explore_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Welcome extends StatefulWidget {
-  const Welcome({Key? key}) : super(key: key);
+class Explore extends StatefulWidget {
+  const Explore({Key? key}) : super(key: key);
 
   @override
-  State<Welcome> createState() => _WelcomeState();
+  State<Explore> createState() => _ExploreState();
 }
 
-class _WelcomeState extends State<Welcome> {
-  final String _image = "images/11.jpg";
+class _ExploreState extends State<Explore> {
+  final String _image = "images/welcome/welcome-1.jpg";
 
   @override
   Widget build(BuildContext context) {
@@ -60,33 +58,23 @@ class _WelcomeState extends State<Welcome> {
                     ),
                   ),
                   SizedBox(height: 40),
-                  GestureDetector(
-                    onTap: (){
-                      BlocProvider.of<AppCubits>(context).getData();
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainPage(),)
+                      );
                     },
-                    child: Container(
-                      width: 200,
-                      child: Row(
-                        children: [ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => MainPage(),)
-                              );
-                            },
 
-                            child: Text("Explore more"),
-                            style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                ),
-              ),
-              fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
-            ),
-                        ),]
+                    child: Text("Explore more"),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                       ),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
                     ),
                   )
                 ],

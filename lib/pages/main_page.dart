@@ -13,49 +13,71 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 
 }
-
 class _MainPageState extends State<MainPage> {
-  List pages = [
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
     HomePage(),
     Exchange(),
-    //EthiopianCalendarTable(year: 2013,),
-    MyPage()
+    // EthiopianCalendarTable(year: 2013,),
+    // MyPage()
   ];
-  int currentIndex=0;
 
-
-
-  void onTap(int index){
+  void _onItemTapped(int index) {
     setState(() {
-      currentIndex =index;
+      _selectedIndex = index;
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: pages[currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          unselectedFontSize: 0,
-          selectedFontSize: 0,
-          type:BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          onTap: onTap,
-          currentIndex: currentIndex,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.grey.withOpacity(0.5),
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
-          elevation:0,
-
-          items: [
-            BottomNavigationBarItem(label:"Home",icon: Icon(Icons.apps)),
-            BottomNavigationBarItem(label:"chart",icon:Icon(Icons.currency_exchange)),
-            BottomNavigationBarItem(label:"Calnder",icon: Icon(Icons.calendar_month)),
-            BottomNavigationBarItem(label:"profile",icon: Icon(Icons.person)),
-          ],
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomAppBar(
+        shape: CircularNotchedRectangle(),
+        notchMargin: 8.0,
+        child: Container(
+          height: 56.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.apps),
+                onPressed: () {
+                  _onItemTapped(0);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.currency_exchange),
+                onPressed: () {
+                  _onItemTapped(1);
+                },
+              ),
+              SizedBox(width: 50.0),
+              IconButton(
+                icon: Icon(Icons.calendar_today),
+                onPressed: () {
+                  _onItemTapped(2);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.person),
+                onPressed: () {
+                  _onItemTapped(3);
+                },
+              ),
+            ],
+          ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.travel_explore),
+          backgroundColor: Colors.brown,
+        onPressed: () {
+       //  map();
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
