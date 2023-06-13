@@ -1,5 +1,6 @@
+import 'package:ethiopia/pages/bookmark.dart';
 import 'package:ethiopia/pages/home_page.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ethiopia/pages/calender.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +19,9 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    Exchange(),
-    // EthiopianCalendarTable(year: 2013,),
-    // MyPage()
+    BookMark(),
+    Calender(),
+    MyPage()
   ];
 
   void _onItemTapped(int index) {
@@ -48,14 +49,14 @@ class _MainPageState extends State<MainPage> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.currency_exchange),
+                icon: Icon(Icons.bookmark),
                 onPressed: () {
                   _onItemTapped(1);
                 },
               ),
               SizedBox(width: 50.0),
               IconButton(
-                icon: Icon(Icons.calendar_today),
+                icon: Icon(Icons.calendar_month),
                 onPressed: () {
                   _onItemTapped(2);
                 },
@@ -71,10 +72,14 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.travel_explore),
-          backgroundColor: Colors.brown,
+        backgroundColor: Colors.brown,
+        child: SvgPicture.asset(
+          'assets/ethiopia_shape.svg',
+          width: 30,
+          height: 30,
+        ),
         onPressed: () {
-       //  map();
+          // Add your onPressed function here
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

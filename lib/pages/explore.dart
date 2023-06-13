@@ -14,6 +14,7 @@ class Explore extends StatefulWidget {
 
 class _ExploreState extends State<Explore> {
   final String _image = "images/welcome/welcome-1.jpg";
+  String _selectedOption = 'Option 1';
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class _ExploreState extends State<Explore> {
       body: Stack(
         children: [
           Container(
+
             width: double.maxFinite,
             height: double.maxFinite,
             decoration: BoxDecoration(

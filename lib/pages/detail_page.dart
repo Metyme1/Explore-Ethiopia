@@ -1,427 +1,293 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+class Comment {
+  final int id;
+  final String text;
+
+  Comment({required this.id, required this.text});
+}
 
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
 
   @override
-  State<DetailPage> createState() => _DetailPageState();
+  _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
-  List<String> comments = [
-    'Great place!',
-    'I loved it!',
-    'Would definitely recommend.',
-    'Not bad, but could be better.',
-  ];
+  List<String> _comments = [
+    'Comment 1 text',
+    'Comment 2 text',
+    'Comment 3 text',
+    'Comment 4 text',
+    'Comment 5 text',
+    'Comment 6 text',
+  ]; // Make sure to initialize your comments list
 
-  int selectedIndex = -1;
+  int _selectedIndex = 0;
+  String _selectedCommentText = 'Comment 1 text';
+  bool _isBookmarked = false;
+
+  final TextEditingController _commentController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const BottomAppBar(),
-      body: Container(
+      body:  Container(
         width: double.maxFinite,
         height: double.maxFinite,
         child: Stack(
-          children: [
-            Positioned(
-              left: 20,
-              top: 50,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.menu),
-                    color: Colors.white,
-                  )
-                ],
-              ),
-            ),
-            Positioned(
-              left: 0,
-              right: 0,
-              child: Container(
+        children: [
+        Positioned(
+        left: 20,
+        top:50,
+        child: Row(
+        children: [
+        IconButton(onPressed: (){}, icon: Icon(Icons.menu),
+    color:Colors.white)
+    ],
+    )),
+          Stack(
+            children: [
+              Container(
                 width: double.maxFinite,
                 height: 300,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/welcome-1.jpg"),
+                    image: AssetImage("images/categories/Hist&cal/lalibela.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              top: 280,
-              child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
-                width: MediaQuery.of(context).size.width,
-                height: 500,
-                decoration: BoxDecoration(
+              Positioned(
+                left: 10,
+                top: 20,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Navigate back to the previous screen
+                  },
+                  icon: Icon(Icons.arrow_back),
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+                ),
+              ),
+              Positioned(
+                right: 10,
+                top: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: _isBookmarked ? Colors.red : Colors.black,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isBookmarked = !_isBookmarked; // Toggle the bookmark state
+                      });
+                    },
+                    icon: Icon(
+                      _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      color: _isBookmarked ? Colors.red : Colors.white,
+                    ),
                   ),
                 ),
+              ),
+            ],
+          ),
+
+
+          Positioned(
+    top:280,
+    child: Container(
+    padding: const EdgeInsets.only(left:20,right:20,top:30),
+    width: MediaQuery.of(context).size.width,
+    height: 500,
+
+    decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(30),
+    topRight: Radius.circular(30),
+
+    )
+    ),
+          child :Expanded(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Gonder",
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 30,
-                          ),
-                        ),
-                        Text(
-                          "\$ 250",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 30,
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: 20),
+                    Text(
+                      'Example Location',
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     SizedBox(height: 10),
                     Row(
                       children: [
-                        Icon(
-                          Icons.location_on,
-                          color: Colors.black,
+                        InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  height: 300,
+                                  child: Center(
+                                    child: Text('Map of the place'),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Icon(Icons.location_on, color: Colors.grey),
                         ),
+                        SizedBox(width: 5),
                         Text(
-                          "Gonder, Ethiopia",
+                          'City, Country',
                           style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
+                            color: Colors.grey,
+                            fontSize: 16,
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     Text(
-                      "Description",
+                      'Description',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "This is the most incredible place I have ever seen in my life.",
+                      'This is an example description of the location. You can add more details here. This is an example description of the location. You can add more details here.',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
+                        fontSize: 16,
+                        color: Colors.grey[600],
                       ),
                     ),
-                    SizedBox(height: 25),
+                    SizedBox(height: 20),
                     Text(
-                      "Comments",
+                      'Comments',
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 25,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(height: 10),
-                    Positioned(
-                      top: 650,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: comments.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
+                    Container(
+                      height: 40, // Set a fixed height for the buttons container
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _comments.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.symmetric(horizontal: 4.0), // Add some margin between buttons
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4.0), // Apply a border radius to make it square
+                              border: Border.all(
+                                color: _selectedIndex == index ? Colors.brown : Colors.white, // Use selected color for the selected button
+                                width: 2.0, // Set a custom border width
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
                                 setState(() {
-                                  selectedIndex = index;
+                                  _selectedIndex = index;
+                                  _selectedCommentText = _comments[index];
                                 });
                               },
-                              child: Container(
-                                width: 50,
-                                margin: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: selectedIndex == index
-                                      ? Colors.grey[200]
-                                      : Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 5,
-                                      offset: Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '${index + 1}',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: selectedIndex == index
-                                          ? Colors.black
-                                          : Colors.grey,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: selectedIndex == -1
-                            ? Center(
-                          child: Text(
-                            'Select a comment to view',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        )
-                            : ListView.builder(
-                          itemCount: comments.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                comments[index],
+                                '${index + 1}',
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  color: _selectedIndex == index ? Colors.brown : Colors.black,
                                 ),
                               ),
-                            );
-                          },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.brown,
+                          width: 2,
+                        ),
+                      ),
+                      child: SizedBox(
+                        height: 60,
+                        child: Center(
+                          child: Text(
+                            _selectedCommentText,
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
                         ),
                       ),
                     ),
-                  ],
+                    SizedBox(height: 20),
+                    Text(
+                      'Add comment',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _commentController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your comment here',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+
+                      onPressed: () {
+                      //   final newComment = Comment(
+                      //     id: _comments.length + 1,
+                      //     text: _commentController.text,
+                      //   );
+                      //   setState(() {
+                      //     _comments.add(newComment);
+                      //     _commentController.clear();
+                      //   });
+                      },
+                      child: Text('Post comment'),
+                    ),
+                  ]
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+    )
+      )]
+
+
+          )
       ),
     );
   }
 }
-            // Positioned(
-            //   bottom: 0,
-            //   left: 130,
-            //   right: 30,
-            //   child: Row(
-            //     children: [
-            //       ElevatedButton(
-            //         style: ElevatedButton.styleFrom(
-            //           primary: Colors.black,
-            //           shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(10),
-            //           ),
-            //         ),
-            //         onPressed: () {
-            //           showDialog(
-            //             context: context,
-            //             builder: (BuildContext context) {
-            //               return TripPage();
-            //             },
-            //           );
-            //         },
-            //         child: Text('Book your trip now'),
-            //       ),
-            //     ],
-            //   ),
-            //
-
-
-//
-// class TripPage extends StatefulWidget {
-//   @override
-//   _TripPageState createState() => _TripPageState();
-// }
-//
-// class _TripPageState extends State<TripPage> {
-//   late TextEditingController _startDateController;
-//   late TextEditingController _endDateController;
-//   late String _imageUrl;
-//   late double _price;
-//   late int _confirmationCode;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _startDateController = TextEditingController();
-//     _endDateController = TextEditingController();
-//     _imageUrl = 'images/welcome-1.jpg';
-//     _price = 100.0;
-//     _confirmationCode = 0;
-//   }
-//
-//   void _selectDate(BuildContext context, TextEditingController controller) async {
-//     final DateTime? picked = await showDatePicker(
-//       context: context,
-//       initialDate: DateTime.now(),
-//       firstDate: DateTime.now(),
-//       lastDate: DateTime.now().add(Duration(days: 365)),
-//     );
-//     if (picked != null) {
-//       controller.text = DateFormat('MMM d, y').format(picked);
-//     }
-//   }
-//
-//   void _generateConfirmationCode() {
-//     final rng = Random();
-//     final confirmationCode = rng.nextInt(9001) + 1000;
-//     showDialog(
-//       context: context,
-//       builder: (BuildContext context) {
-//         return AlertDialog(
-//           title: Text('Confirmation Code'),
-//           content: Text('Your confirmation code is: $confirmationCode'),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//                 setState(() {
-//                   _confirmationCode = 0;
-//                 });
-//               },
-//               child: Text('OK'),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//     setState(() {
-//       _confirmationCode = confirmationCode;
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Material(
-//         child: Scaffold(
-//           appBar: AppBar(
-//             backgroundColor: Colors.brown,
-//             title: Text('Trip Page'),
-//           ),
-//           body: SingleChildScrollView(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.stretch,
-//               children: [
-//                 Container(
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.only(
-//                       bottomLeft: Radius.circular(16),
-//                       bottomRight: Radius.circular(16),
-//                     ),
-//                     image: DecorationImage(
-//                       image: AssetImage(_imageUrl),
-//                       fit: BoxFit.cover,
-//                     ),
-//                   ),
-//                   height: 200,
-//                 ),
-//                 SizedBox(height: 16),
-//                 Text(
-//                   'Trip Description',
-//                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//                 ),
-//                 SizedBox(height: 8),
-//                 Text(
-//                   'This is a sample trip description. It contains information about the trip and the areas that will be visited.',
-//                   style: TextStyle(fontSize: 16),
-//                 ),
-//                 SizedBox(height: 16),
-//                 Text(
-//                   'Price: $_price Birr',
-//                   style: TextStyle(fontSize: 18),
-//                 ),
-//                 SizedBox(height: 16),
-//                 Row(
-//                   children: [
-//                     Expanded(
-//                       child: TextField(
-//                         controller: _startDateController,
-//                         decoration: InputDecoration(
-//                           labelText: 'Start Date',
-//                           suffixIcon: Icon(Icons.calendar_today),
-//                         ),
-//                         onTap: () => _selectDate(context, _startDateController),
-//                       ),
-//                     ),
-//                     SizedBox(width: 16),
-//                     Expanded(
-//                       child: TextField(
-//                         controller: _endDateController,
-//                         decoration: InputDecoration(
-//                           labelText: 'End Date',
-//                           suffixIcon: Icon(Icons.calendar_today),
-//                         ),
-//                         onTap: () => _selectDate(context, _endDateController),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 SizedBox(height: 16),
-//                 SizedBox(
-//                   width: 200,
-//                   child: ElevatedButton(
-//                     onPressed: _generateConfirmationCode,
-//                     child: Text('Send Confirmation Code to Pay Birr'),
-//                     style: ElevatedButton.styleFrom(
-//                       primary: Colors.brown,
-//                       minimumSize: Size(50, 50),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(50),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//                 SizedBox(height: 32),
-//                 // Padding(
-//                 //   padding: const EdgeInsets.symmetric(horizontal: 16),
-//                 //   child: Text(
-//                 //     'Related Images',
-//                 //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-//                 //   ),
-//                 // ),
-//                 SizedBox(height: 16),
-//                 // AspectRatio(
-//                 //   aspectRatio: 1.5,
-//                 //   child: GridView.count(
-//                 //     crossAxisCount: 2,
-//                 //     mainAxisSpacing: 8,
-//                 //     crossAxisSpacing: 8,
-//                 //     children: [
-//                 //       Image.asset('images/welcome-1.jpg', fit: BoxFit.cover),
-//                 //       Image.asset('images/welcome-2.jpg', fit: BoxFit.cover),
-//                 //       Image.asset('images/welcome-3.jpg', fit: BoxFit.cover),
-//                 //       Image.asset('images/welcome-1.jpg', fit: BoxFit.cover),
-//                 //
-//                 //     ],
-//                 //   ),
-//                 // ),
-//               ],
-//             ),
-//           ),
-//         )
-//     );
-//   }
-//}

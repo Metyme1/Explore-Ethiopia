@@ -51,6 +51,7 @@ dependencies:
   http:
   google_maps_flutter_web: ^0.4.0+5
   google_maps_flutter: ^2.2.3
+  flutter_svg: ^0.22.0
 dev_dependencies:
   flutter_test:
 

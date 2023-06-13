@@ -7,7 +7,7 @@ import 'package:ethiopia/pages/home_page.dart';
 import 'package:ethiopia/pages/main_page.dart';
 import 'package:ethiopia/pages/map.dart';
 import 'package:ethiopia/pages/signup_login.dart';
-import 'package:ethiopia/pages/trip_booking.dart';
+
 import 'package:ethiopia/pages/explore.dart';
 import 'package:flutter/material.dart';
 

@@ -11,7 +11,7 @@ class AppText extends StatelessWidget {
       {Key? key,
         this.size=15,
         required this.text,
-        this.color=Colors.black,} ) : super(key: key);
+        this.color=Colors.black, } ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
