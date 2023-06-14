@@ -1,21 +1,45 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class BookMark extends StatefulWidget {
-  const BookMark({Key? key}) : super(key: key);
-
+class BookmarkPage extends StatefulWidget {
   @override
-  State<BookMark> createState() => _BookMarkState();
+  _BookmarkPageState createState() => _BookmarkPageState();
 }
 
-class _BookMarkState extends State<BookMark> {
+class _BookmarkPageState extends State<BookmarkPage> {
+  List<String> _bookmarkedItems = [
+    "Historical and cultural places",
+    "Wildlife and nature",
+  ];
+
+  void _removeBookmark(String item) {
+    setState(() {
+      _bookmarkedItems.remove(item);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child:Center(
-          child: Text(
-              " bookmark"
-          ),
-        )
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Bookmarks"),
+      ),
+      body: _bookmarkedItems.isEmpty
+          ? Center(
+        child: Text("No bookmarks yet"),
+      )
+          : ListView.builder(
+        itemCount: _bookmarkedItems.length,
+        itemBuilder: (context, index) {
+          final item = _bookmarkedItems[index];
+          return ListTile(
+            title: Text(item),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => _removeBookmark(item),
+            ),
+          );
+        },
+      ),
     );
   }
 }

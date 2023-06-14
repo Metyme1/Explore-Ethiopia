@@ -57,7 +57,7 @@ class _SignLoginState extends State<SignLogin> {
                   height: 300,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("images/welcome-1.jpg"),
+                        image: AssetImage("images/categories/Hist&cal/lalibela.jpg"),
                         fit:BoxFit.cover
                     ),
 
@@ -237,7 +237,7 @@ class _LoginState extends State<Login> {
                       height: 300,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("images/welcome-1.jpg"),
+                            image: AssetImage("images/categories/Hist&cal/lalibela.jpg"),
                             fit:BoxFit.cover
                         ),
 
@@ -296,11 +296,11 @@ class _LoginState extends State<Login> {
                         ElevatedButton(
                           onPressed: () {
                             FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text).then((value){
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(builder: (context) => TripPage())
-                              //
-                              //     );
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => DetailPage())
+
+                                  );
                               Text('User ID: $_userId');
                               }).onError((error, stackTrace) {
                                 print("error${error.toString()}");
@@ -310,7 +310,7 @@ class _LoginState extends State<Login> {
                           },
                           child: Text('Login'),
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),

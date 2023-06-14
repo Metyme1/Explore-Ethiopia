@@ -1,9 +1,10 @@
-import 'package:ethiopia/pages/cloths.dart';
+import 'package:ethiopia/pages/AcientGallery.dart';
+import 'package:ethiopia/pages/currency.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/app_large_text.dart';
 import 'detail_page.dart';
-import 'exchange.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -37,29 +38,34 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
+      drawer:Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.brown,
-
-              ),
-              child: Image.asset(
-                "images/categories/Hist&cal/lalibela.jpg",
-                width: 100,
-                height: 100,
+            Container(
+              height: 300, // Set the height to your desired value
+              child: DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.brown,
+                ),
+                // child: Image.asset(
+                //   "images/categories/Hist&cal/lalibela.jpg",
+                //   width: 100,
+                //   height: 100,
+                // ),
+                child: Text(""),
               ),
             ),
-            SizedBox(height: 100,),
+            SizedBox(
+              height: 100,
+            ),
             ListTile(
               leading: Icon(Icons.currency_exchange),
               title: Text('Currency Exchange Info'),
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Exchange()),
+                  MaterialPageRoute(builder: (context) => Currency()),
                 );
               },
             ),
@@ -74,7 +80,10 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               leading: Icon(Icons.browse_gallery),
               title: Text('Ancient gallery'),
               onTap: () {
-                // Update the UI based on the selection.
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventGallery()),
+                );
               },
             ),
           ],
@@ -311,20 +320,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  SizedBox(width: 5),
-                                  AppText(
-                                    text: "4.5",
-                                    color: Colors.grey,
-                                    size: 16,
-                                  ),
-                                ],
-                              ),
+
                             ],
                           ),
                         ],

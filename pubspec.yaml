@@ -31,7 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   table_calendar: ^3.0.0
-  intl: ^0.17.0
+  shared_preferences: ^2.1.2
+
 #  abushakir: ^1.0.0
   flutter_riverpod: ^2.3.6
 
@@ -52,6 +53,11 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+5
   google_maps_flutter: ^2.2.3
   flutter_svg: ^0.22.0
+
+  flutter_localizations:
+    sdk: flutter
+
+
 dev_dependencies:
   flutter_test:
 
@@ -70,16 +76,18 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  generate: true
+
   uses-material-design: true
+
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/welcome/
     - images/categories/Hist&cal/
-  #   - images/a_dot_ham.jpeg
+    - images/categories/events/
+    - images/categories/my musem/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

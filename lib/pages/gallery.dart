@@ -11,7 +11,7 @@ class GalleryPage extends StatefulWidget {
 
 class _GalleryPageState extends State<GalleryPage> {
   final List<String> _photos = [
-    'images/welcome-1.jpg',
+    'images/events/eidalfitir.jpg',
     'images/welcome-3.jpg',
     'images/welcome-1.jpg',
     'images/Cloths.jpg',

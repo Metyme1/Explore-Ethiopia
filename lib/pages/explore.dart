@@ -13,8 +13,8 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  final String _image = "images/welcome/welcome-1.jpg";
-  String _selectedOption = 'Option 1';
+  final String _image = "images/categories/Hist&cal/lalibela.jpg";
+  String _selectedOption = 'English';
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,29 @@ class _ExploreState extends State<Explore> {
                 image: AssetImage(_image),
                 fit: BoxFit.cover,
               ),
+            ),
+          ),
+          Positioned(
+            top: 40,
+            right: 20,
+            child: DropdownButton<String>(
+              value: _selectedOption,
+              items: <String>[
+                'English',
+                'Arabic',
+                'France',
+              ].map((String value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedOption = newValue!;
+                });
+                // Handle the selection
+              },
             ),
           ),
           Positioned.fill(

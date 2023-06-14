@@ -1,10 +1,8 @@
-import 'package:ethiopia/pages/bookmark.dart';
-import 'package:ethiopia/pages/home_page.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ethiopia/pages/calender.dart';
 import 'package:flutter/material.dart';
 
-import 'exchange.dart';
+import 'bookmark.dart';
+import 'calender.dart';
+import 'home_page.dart';
 import 'my_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -12,17 +10,56 @@ class MainPage extends StatefulWidget {
 
   @override
   State<MainPage> createState() => _MainPageState();
-
 }
+
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
     HomePage(),
-    BookMark(),
+    BookmarkPage(),
     Calender(),
     MyPage()
   ];
+
+  Widget _buildFloatingActionButton() {
+    switch (_selectedIndex) {
+      case 0:
+        return FloatingActionButton(
+          backgroundColor: Colors.brown,
+          child: Icon(Icons.travel_explore),
+          onPressed: () {
+            // Add your onPressed function here
+          },
+        );
+      case 1:
+        return FloatingActionButton(
+          backgroundColor: Colors.brown,
+          child: Icon(Icons.bookmark_added_rounded),
+          onPressed: () {
+            // Add your onPressed function here
+          },
+        );
+      case 2:
+        return FloatingActionButton(
+          backgroundColor: Colors.brown,
+          child: Icon(Icons.calendar_month),
+          onPressed: () {
+            // Add your onPressed function here
+          },
+        );
+      case 3:
+        return FloatingActionButton(
+          backgroundColor: Colors.brown,
+          child: Icon(Icons.person),
+          onPressed: () {
+            // Add your onPressed function here
+          },
+        );
+      default:
+        return Container();
+    }
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -43,7 +80,7 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.apps),
+                icon: Icon(Icons.travel_explore),
                 onPressed: () {
                   _onItemTapped(0);
                 },
@@ -71,17 +108,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.brown,
-        child: SvgPicture.asset(
-          'assets/ethiopia_shape.svg',
-          width: 30,
-          height: 30,
-        ),
-        onPressed: () {
-          // Add your onPressed function here
-        },
-      ),
+      floatingActionButton: _buildFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }

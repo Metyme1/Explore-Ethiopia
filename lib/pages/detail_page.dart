@@ -1,3 +1,4 @@
+import 'package:ethiopia/pages/signup_login.dart';
 import 'package:flutter/material.dart';
 
 class Comment {
@@ -73,12 +74,12 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
               Positioned(
+                bottom: 20, // Set the position of the bookmark button to the bottom
                 right: 10,
-                top: 20,
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                      color: _isBookmarked ? Colors.red : Colors.black,
+                      color: _isBookmarked ? Colors.red : Colors.white,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(12),
@@ -90,7 +91,7 @@ class _DetailPageState extends State<DetailPage> {
                       });
                     },
                     icon: Icon(
-                      _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                      _isBookmarked ? Icons.bookmark : Icons.bookmark,
                       color: _isBookmarked ? Colors.red : Colors.white,
                     ),
                   ),
@@ -98,7 +99,6 @@ class _DetailPageState extends State<DetailPage> {
               ),
             ],
           ),
-
 
           Positioned(
     top:280,
@@ -185,7 +185,7 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     SizedBox(height: 10),
                     Container(
-                      height: 40, // Set a fixed height for the buttons container
+                      height: 50, // Set a fixed height for the buttons container
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: ScrollPhysics(),
@@ -221,18 +221,18 @@ class _DetailPageState extends State<DetailPage> {
                       ),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                           color: Colors.brown,
-                          width: 2,
+                          width: 0,
                         ),
                       ),
                       child: SizedBox(
-                        height: 60,
+                        height: 80,
                         child: Center(
                           child: Text(
                             _selectedCommentText,
@@ -264,16 +264,14 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                     SizedBox(height: 10),
                     ElevatedButton(
-
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+                      ),
                       onPressed: () {
-                      //   final newComment = Comment(
-                      //     id: _comments.length + 1,
-                      //     text: _commentController.text,
-                      //   );
-                      //   setState(() {
-                      //     _comments.add(newComment);
-                      //     _commentController.clear();
-                      //   });
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SignLogin()),
+                        );
                       },
                       child: Text('Post comment'),
                     ),

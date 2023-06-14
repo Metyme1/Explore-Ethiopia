@@ -1,5 +1,6 @@
 import 'package:ethiopia/pages/calender.dart';
 import 'package:ethiopia/pages/currency.dart';
+
 import 'package:ethiopia/pages/detail_page.dart';
 import 'package:ethiopia/pages/explore.dart';
 import 'package:ethiopia/pages/gallery.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.blue,
       ),
-      home:MainPage(),
+      home:Explore(),
     );
   }
 }
