@@ -197,7 +197,7 @@ class _DetailPageState extends State<DetailPage> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4.0), // Apply a border radius to make it square
                               border: Border.all(
-                                color: _selectedIndex == index ? Colors.brown : Colors.white, // Use selected color for the selected button
+                                color: _selectedIndex == index ? Colors.teal : Colors.white, // Use selected color for the selected button
                                 width: 2.0, // Set a custom border width
                               ),
                             ),
@@ -227,7 +227,7 @@ class _DetailPageState extends State<DetailPage> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         border: Border.all(
-                          color: Colors.brown,
+                          color: Colors.teal,
                           width: 0,
                         ),
                       ),
@@ -265,7 +265,7 @@ class _DetailPageState extends State<DetailPage> {
                     SizedBox(height: 10),
                     ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
                       ),
                       onPressed: () {
                         Navigator.push(

@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:ethiopia/pages/AcientGallery.dart';
 import 'package:ethiopia/pages/currency.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +18,29 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   bool _isBookmarked = false;
 
   final List<String> images = [
-    "images/places/lalibela.jpg",
-    "images/places/axum.jpg",
-    "images/places/danakil.jpg",
-    "images/places/harar.jpg",
-    "images/places/awash.jpg",
+    "images/categories/Hist&cal/lalibela.jpg",
+    "images/categories/Hist&cal/fassil.jpg",
+    "images/categories/Hist&cal/sof-omar.jpg",
+    "images/categories/religious/al-negash.jpg",
+    "images/categories/urban and rural/gurage.jpeg",
+    "images/categories/urban and rural/gurage.jpeg",
+
+  ];
+  final List<String> names = [
+    "Lalibela",
+    "Gonder",
+    "sof-omar",
+    "al Negash",
+    "gurage",
+    "",
+  ];
+  final List<String> locations= [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
   ];
 
   @override
@@ -46,7 +66,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               height: 300, // Set the height to your desired value
               child: DrawerHeader(
                 decoration: BoxDecoration(
-                  color: Colors.brown,
+                  color: Colors.teal,
                 ),
                 // child: Image.asset(
                 //   "images/categories/Hist&cal/lalibela.jpg",
@@ -96,12 +116,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
 
             Container(
-              padding: const EdgeInsets.only(top: 70, left: 50),
+              padding: const EdgeInsets.only(top: 70, left: 10),
               child: Row(
                 children: [
-
+                  IconButton(
+                    icon: Icon(Icons.menu),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer(); // Open the drawer
+                    },
+                  ),
                   Expanded(child: Container()),
                   Container(
+
                     width: 50,
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
@@ -128,11 +154,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 child: TabBar(
                   labelPadding: const EdgeInsets.only(left: 20, right: 20,),
                   controller: _tabController,
-                  labelColor: Colors.brown,
+                  labelColor: Colors.teal,
                   unselectedLabelColor: Colors.grey,
                   isScrollable: true,
                   indicatorSize: TabBarIndicatorSize.label,
-                  indicator: CircleTabIndicator(color: Colors.brown, radius: 5),
+                  indicator: CircleTabIndicator(color: Colors.teal, radius: 5),
                   tabs: [
                     Tab(text: "Historical and cultural places"),
                     Tab(text: "Religious"),
@@ -204,7 +230,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                       left: 10,
                                       child: AppText(
                                         text: "Lalibela",
-                                        color: Colors.white,
+                                        color: Colors.teal,
                                       ),
                                     ),
                                     Positioned(
@@ -245,96 +271,98 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             Container(
               child: Padding(
                 padding: const EdgeInsets.only(left: 20),
-                child: AppLargeText(text: "Popular sites", size: 22, color: Colors.brown),
+                child: AppLargeText(text: "Popular sites", size: 22, color: Colors.teal),
               ),
             ),
             SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
-                  childAspectRatio: 0.7,
-                ),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Navigate to the explore page
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: 0.7,
+            ),
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: images.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  // Navigate to the explore page
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                      child: Column(
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: AssetImage(images[index]),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      AppText(
+                        text: names[index],
+                        color: Colors.black87,
+                        size: 18,
+                        weight: FontWeight.bold,
+                      ),
+                      SizedBox(height: 10),
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  "images/categories/Hist&cal/lalibela.jpg",
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          AppText(
-                            text: "Lalibela",
-                            color: Colors.black87,
-                            size: 18,
-                            weight: FontWeight.bold,
-                          ),
-                          SizedBox(height: 10),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on,
-                                    color: Colors.grey,
-                                  ),
-                                  SizedBox(width: 5),
-                                  AppText(
-                                    text: "Amhara",
-                                    color: Colors.grey,
-                                    size: 16,
-                                  ),
-                                ],
+                              Icon(
+                                Icons.location_on,
+                                color: Colors.grey,
                               ),
-
+                              SizedBox(width: 5),
+                              AppText(
+                                text:locations[index],
+                                color: Colors.grey,
+                                size: 16,
+                              ),
                             ],
                           ),
+
                         ],
                       ),
-                    ),
-                  );
-                },
-              ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        )
+]
+
             ),
-            SizedBox(height: 30),
-          ],
+
+
+
         ),
-      ),
-    );
+      );
+
   }
 }
 

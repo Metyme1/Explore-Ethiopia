@@ -26,12 +26,11 @@ class _CurrencyState extends State<Currency> {
       'X-RapidAPI-Key': 'be7a58fecbmsh61cc619f8964da9p15b2fbjsnf44ff427ddf2',
       'X-RapidAPI-Host': 'currency-converter-by-api-ninjas.p.rapidapi.com'
     };
-
     try {
       final response = await http.get(url, headers: headers);
       final result = response.body;
       Map<String, dynamic> data = json.decode(result);
-      double newAmount = data['new_amount']?.toDouble() ?? 0.0;
+      double newAmount = data['result']?.toDouble() ?? 0.0;
       setState(() {
         _output = newAmount.toString();
       });
@@ -39,6 +38,7 @@ class _CurrencyState extends State<Currency> {
       print(error);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class _CurrencyState extends State<Currency> {
         ),
        // title: Text('Currency Converter'),
         centerTitle: true,
-        backgroundColor: Colors.brown,
+        backgroundColor: Colors.teal,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -137,9 +137,10 @@ class _CurrencyState extends State<Currency> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {
-                  // do something
-                },
+
+                  onPressed: () => CurrencyConveter(
+                      _fromCurrency!, myController2.text, _toCurrency!),
+
                 child: Text('Click me'),
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -154,19 +155,13 @@ class _CurrencyState extends State<Currency> {
                     TextStyle(fontSize: 18),
                   ),
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Colors.brown,
+                    Colors.teal,
                   ),
                 ),
               ),
               SizedBox(height: 20),
-              AnimatedSwitcher(
-                duration: Duration(milliseconds: 500),
-                child: Text(
-                  _output,
-                  key: ValueKey<String>(_output),
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.brown),
-                ),
-              ),
+             Text(_output),
+
             ],
           ),
         ),

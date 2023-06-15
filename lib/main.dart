@@ -7,6 +7,8 @@ import 'package:ethiopia/pages/gallery.dart';
 import 'package:ethiopia/pages/home_page.dart';
 import 'package:ethiopia/pages/main_page.dart';
 import 'package:ethiopia/pages/map.dart';
+import 'package:ethiopia/pages/my_page.dart';
+import 'package:ethiopia/pages/recom.dart';
 import 'package:ethiopia/pages/signup_login.dart';
 
 import 'package:ethiopia/pages/explore.dart';

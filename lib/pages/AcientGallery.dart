@@ -65,7 +65,7 @@ class EventGallery extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Ancient Gallery'),
-        backgroundColor: Colors.brown
+        backgroundColor: Colors.teal
       ),
       body: GridView.builder(
         itemCount: images.length,

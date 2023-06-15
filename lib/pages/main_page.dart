@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
     switch (_selectedIndex) {
       case 0:
         return FloatingActionButton(
-          backgroundColor: Colors.brown,
+          backgroundColor: Colors.teal,
           child: Icon(Icons.travel_explore),
           onPressed: () {
             // Add your onPressed function here
@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
         );
       case 1:
         return FloatingActionButton(
-          backgroundColor: Colors.brown,
+          backgroundColor: Colors.teal,
           child: Icon(Icons.bookmark_added_rounded),
           onPressed: () {
             // Add your onPressed function here
@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
         );
       case 2:
         return FloatingActionButton(
-          backgroundColor: Colors.brown,
+          backgroundColor: Colors.teal,
           child: Icon(Icons.calendar_month),
           onPressed: () {
             // Add your onPressed function here
@@ -50,7 +50,7 @@ class _MainPageState extends State<MainPage> {
         );
       case 3:
         return FloatingActionButton(
-          backgroundColor: Colors.brown,
+          backgroundColor: Colors.teal,
           child: Icon(Icons.person),
           onPressed: () {
             // Add your onPressed function here

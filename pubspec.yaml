@@ -87,6 +87,9 @@ flutter:
     - images/categories/Hist&cal/
     - images/categories/events/
     - images/categories/my musem/
+    - images/categories/urban and rural/
+    - images/categories/religious/
+    - images/categories/landscapes/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

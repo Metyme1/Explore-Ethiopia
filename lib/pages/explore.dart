@@ -13,7 +13,7 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  final String _image = "images/categories/Hist&cal/lalibela.jpg";
+  final String _image =     "images/categories/Hist&cal/sof-omar.jpg";
   String _selectedOption = 'English';
 
   @override
@@ -93,7 +93,7 @@ class _ExploreState extends State<Explore> {
 
                     child: Text("Explore more"),
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
