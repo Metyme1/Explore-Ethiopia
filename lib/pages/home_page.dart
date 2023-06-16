@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:ethiopia/pages/AcientGallery.dart';
 import 'package:ethiopia/pages/currency.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/app_large_text.dart';
@@ -14,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+  final user=FirebaseAuth.instance.currentUser!;
   late TabController _tabController;
   bool _isBookmarked = false;
 
@@ -23,7 +25,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "images/categories/Hist&cal/sof-omar.jpg",
     "images/categories/religious/al-negash.jpg",
     "images/categories/urban and rural/gurage.jpeg",
-    "images/categories/urban and rural/gurage.jpeg",
+    "images/categories/urban and rural/kuriftu.jpg",
 
   ];
   final List<String> names = [
@@ -32,15 +34,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "sof-omar",
     "al Negash",
     "gurage",
-    "",
+    "Kuriftu",
   ];
   final List<String> locations= [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
+    " North Wollo",
+    " Amhara",
+    "East of Ginnir",
+    "Tigray Region ",
+    "Gurage Zone",
+    "Deberzyit",
   ];
 
   @override
@@ -126,14 +128,25 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     },
                   ),
                   Expanded(child: Container()),
+                  Text("Hello, "+user.displayName!,
+                    style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.teal,
+                  ),),
                   Container(
-
                     width: 50,
                     height: 50,
                     margin: const EdgeInsets.only(right: 20),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.grey.withOpacity(0.5),
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          user.photoURL!,
+                        ),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   )
                 ],

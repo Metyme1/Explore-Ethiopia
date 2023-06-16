@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 
 class EventGallery extends StatelessWidget {
   final List<String> images = [
-"images/categories/my musem/crown1.jpeg",
+"images/categories/my musem/crown.jpeg",
     'images/categories/my musem/dress.jpeg',
     'images/categories/my musem/jew.jpg',
     'images/categories/my musem/jew-2.jpeg',
@@ -26,9 +26,11 @@ class EventGallery extends StatelessWidget {
     'images/categories/my musem/jew-4.jpeg',
     'images/categories/my musem/minilik caba.jpeg',
     'images/categories/my musem/muse-5.jpg',
-    'images/categories/my musem/tseure.jpeg',
+    'images/categories/my musem/tesure.jpeg',
     'images/categories/my musem/gasha.jpeg',
     'images/categories/my musem/1.webp',
+    'images/categories/my musem/lucy.jpg',
+
   ];
 
   final List<String> descriptions = [
@@ -43,6 +45,7 @@ class EventGallery extends StatelessWidget {
     'dress 9',
     'dress 10',
     'dress 10',
+    'dress 10',
   ];
 
   final List<String> name = [
@@ -55,6 +58,7 @@ class EventGallery extends StatelessWidget {
     'dress 7',
     'dress 8',
     'dress 9',
+    'dress 10',
     'dress 10',
     'dress 10',
   ];
@@ -89,7 +93,7 @@ class EventGallery extends StatelessWidget {
                       children: [
                         Image.asset(
                           images[index],
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         Positioned(
                           top: 0,

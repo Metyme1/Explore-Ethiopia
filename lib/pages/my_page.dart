@@ -1,69 +1,67 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import 'google_signin.dart';
 import 'main_page.dart';
 
 class MyPage extends StatelessWidget {
+  final user=FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.teal,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30),
-              ),
-            ),
-            padding: EdgeInsets.only(top: 50),
+      Container(
+         height: 100,
 
-          ),
+         decoration: BoxDecoration(
+           color: Colors.teal,
+           borderRadius: BorderRadius.only(
+             bottomLeft: Radius.circular(0),
+             bottomRight: Radius.circular(0),
+           ),
+         ),
+         padding: EdgeInsets.only(top: 50),
+
+       ),
+
+
+          SizedBox(height: 100),
            Column(
             children: [
               CircleAvatar(
                 radius: 60,
                 backgroundImage: NetworkImage(
-                  'https://via.placeholder.com/150',
+                  user.photoURL!
+                ),
+              ),
+              SizedBox(height: 0),
+              Text(
+                'Name:'+ user.displayName!,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal,
                 ),
               ),
               SizedBox(height: 20),
               Text(
-                'John Doe',
+                'Email:'+user.email!,
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.teal,
                 ),
-              ),
-              SizedBox(height: 20),
-
+              )
             ],
           ),
-          _buildSettingOption(
-            context,
-            icon: Icons.notifications,
-            title: 'Notifications',
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                backgroundColor: Colors.transparent,
-                isDismissible: true,
-                isScrollControlled: true,
-                builder: (BuildContext context) {
-                  return Align(
-                    alignment: Alignment.centerRight,
-                    child: FractionallySizedBox(
-                      widthFactor: 0.8,
-                      child: NotificationsBottomSheet(),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+
           Expanded(
+
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
@@ -86,6 +84,30 @@ class MyPage extends StatelessWidget {
                             child: FractionallySizedBox(
                               widthFactor: 0.8,
                               child: TermandCondition(),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  Divider(),
+                  _buildSettingOption(
+                    context,
+                    icon: Icons.notification_add,
+
+                    title: 'notification',
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Colors.transparent,
+                        isDismissible: true,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return Align(
+                            alignment: Alignment.centerRight,
+                            child: FractionallySizedBox(
+                              widthFactor: 0.8,
+                              child: NotificationsBottomSheet(),
                             ),
                           );
                         },
@@ -120,7 +142,11 @@ class MyPage extends StatelessWidget {
                     context,
                     icon: Icons.logout,
                     title: 'Logout',
-                    onTap: () {},
+                    onTap: () {
+                      final provider =
+                          Provider.of<GoogleSign>(context, listen: false);
+                      provider.logout();
+                    },
                   ),
                 ],
               ),
@@ -198,3 +224,4 @@ class About extends StatelessWidget {
     );
   }
 }
+

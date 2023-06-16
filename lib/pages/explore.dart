@@ -5,6 +5,12 @@ import 'package:ethiopia/widget/explore_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+
+import 'google_signin.dart';
+
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
 
@@ -91,7 +97,28 @@ class _ExploreState extends State<Explore> {
                       );
                     },
 
-                    child: Text("Explore more"),
+                    child: Text("Sign in as Guest"),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                      ),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                  final provider =
+                  Provider.of<GoogleSign>(context, listen: false);
+                   provider.googleLogin();
+                    },
+                    icon: FaIcon(FontAwesomeIcons.google, color: Colors.red,),
+                    label: Text("continue with Google"),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
