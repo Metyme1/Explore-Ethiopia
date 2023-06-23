@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
         android:label="ethiopia"
-        android:name="${applicationName}"
+
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -16,12 +16,9 @@
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
-              android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
-              />
-            <meta-data android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyDOmT3IuWcOq87wl4fUXlMDotiiJE2gzYw"/>
+                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame" android:value="true"
 
+                />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -29,6 +26,7 @@
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDOmT3IuWcOq87wl4fUXlMDotiiJE2gzYw"/>
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

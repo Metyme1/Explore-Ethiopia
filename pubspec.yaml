@@ -55,7 +55,7 @@ dependencies:
   image_picker:
   http:
   google_maps_flutter_web: ^0.4.0+5
-  google_maps_flutter: ^2.2.3
+  google_maps_flutter: ^2.2.8
   flutter_svg: ^0.22.0
 
   flutter_localizations:

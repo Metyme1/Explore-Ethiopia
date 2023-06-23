@@ -17,7 +17,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    BookmarkPage(),
+    MapSample(),
     Calender(),
     MyPage()
   ];
