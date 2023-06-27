@@ -1,5 +1,10 @@
-import 'package:ethiopia/pages/signup_login.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'map2.dart';
 
 class Comment {
   final int id;
@@ -9,7 +14,9 @@ class Comment {
 }
 
 class DetailPage extends StatefulWidget {
-  const DetailPage({Key? key}) : super(key: key);
+  final String image;
+  DetailPage({required this.image});
+
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -30,10 +37,34 @@ class _DetailPageState extends State<DetailPage> {
   bool _isBookmarked = false;
 
   final TextEditingController _commentController = TextEditingController();
+  Future<String> _fetchLocationIdFromDatabase() async {
+    // Construct the URL for the query
+    final url = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
 
+    try {
+      // Make a request to your database and receive the data as a JSON object
+      final response = await http.get(Uri.parse(url));
 
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
 
-  @override
+        // Extract the ID of the selected location
+        final id = data['id'].toString();
+
+        return id;
+      } else {
+        // handle error
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      // handle error
+      print('Error: $e');
+    }
+
+    return '';
+  }
+
+    @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +93,7 @@ class _DetailPageState extends State<DetailPage> {
                   height: 300,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(
-                          "images/categories/Hist&cal/lalibela.jpg"),
+                      image:AssetImage(widget.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -79,30 +109,7 @@ class _DetailPageState extends State<DetailPage> {
                     color: Colors.white,
                   ),
                 ),
-                Positioned(
-                  bottom: 20, // Set the position of the bookmark button to the bottom
-                  right: 10,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: _isBookmarked ? Colors.red : Colors.white,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _isBookmarked = !_isBookmarked; // Toggle the bookmark state
-                        });
-                      },
-                      icon: Icon(
-                        _isBookmarked ? Icons.bookmark : Icons.bookmark,
-                        color: _isBookmarked ? Colors.red : Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
+
               ],
             ),
             Positioned(
@@ -149,7 +156,20 @@ class _DetailPageState extends State<DetailPage> {
                                   },
                                 );
                               },
-                              child: Icon(Icons.location_on, color: Colors.grey),
+                              child: IconButton(
+                                onPressed: () {
+                                  // Fetch the ID of the selected location from the database
+                                  _fetchLocationIdFromDatabase().then((id) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MapPage(ID: id),
+                                      ),
+                                    );
+                                  });
+                                },
+                                icon: Icon(Icons.location_on),
+                              )
                             ),
                             SizedBox(width: 5),
                             Text(

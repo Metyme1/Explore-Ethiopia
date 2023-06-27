@@ -1,8 +1,11 @@
+import 'package:ethiopia/pages/currency.dart';
+import 'package:ethiopia/pages/home.dart';
+import 'package:ethiopia/pages/home2.dart';
 import 'package:flutter/material.dart';
 
-import 'bookmark.dart';
 import 'calender.dart';
 import 'home_page.dart';
+import 'map.dart';
 import 'my_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -17,7 +20,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-    MapSample(),
+   Currency(),
     Calender(),
     MyPage()
   ];
@@ -35,7 +38,7 @@ class _MainPageState extends State<MainPage> {
       case 1:
         return FloatingActionButton(
           backgroundColor: Colors.teal,
-          child: Icon(Icons.bookmark_added_rounded),
+          child: Icon(Icons.currency_exchange),
           onPressed: () {
             // Add your onPressed function here
           },
@@ -86,7 +89,7 @@ class _MainPageState extends State<MainPage> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.bookmark),
+                icon: Icon(Icons.currency_exchange),
                 onPressed: () {
                   _onItemTapped(1);
                 },

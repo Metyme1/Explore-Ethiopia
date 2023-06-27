@@ -34,7 +34,7 @@
 // }
 // class DetailState extends CubitStates{
 //   DetailState(this.place);
-//   final DataModel place;
+//   final  place;
 //   @override
 //   // TODO: implement props
 //   List<Object> get props => [place];

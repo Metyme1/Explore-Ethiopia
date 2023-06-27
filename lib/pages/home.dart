@@ -3,8 +3,6 @@ import 'package:ethiopia/pages/map.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'bookmark.dart';
 import 'my_page.dart';
 
 class home extends StatelessWidget {

@@ -1,5 +1,6 @@
 // import 'package:ethiopia/pages/explore.dart';
 // import 'package:ethiopia/pages/home_page.dart';
+// import 'package:ethiopia/pages/main_page.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +25,11 @@
 //       body: BlocBuilder<AppCubits, CubitStates>(
 //         builder: (context, state){
 //           if(state is WelcomeState){
-//             return Welcome();
+//             return Explore();
 //           }
 //           if(state is LoadedState){
-//             return HomePage();
-//           } if(state is LoadedState) {
+//             return MainPage();
+//           } if(state is LoadingState) {
 //             return Center(child: CircularProgressIndicator(),);
 //           }
 //           if(state is DetailState) {

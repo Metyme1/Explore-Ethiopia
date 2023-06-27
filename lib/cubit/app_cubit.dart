@@ -4,6 +4,8 @@
 // import 'package:ethiopia/services/data_services..dart';
 //
 // import '../model/data_model.dart';
+// import '../model/data_model.dart';
+// import '../model/data_model.dart';
 //
 // class AppCubits extends Cubit<CubitStates>{
 //   AppCubits({required this.data}) : super(InitialState()){
@@ -11,10 +13,10 @@
 //   }
 //   final DataServices data;
 //   late final places;
-//   void getData(){
+//   void getData() async{
 //     try{
-//       emit(LoadedState());
-//       places=data.getInfo();
+//       emit(LoadingState());
+//       places=await data.getInfo();
 //       emit(LoadedState(places));
 //     }catch(e){
 //
