@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:core';
 import 'package:ethiopia/cubit/app_cubit.dart';
 import 'package:ethiopia/pages/map2.dart';
@@ -10,7 +11,7 @@ import 'package:ethiopia/pages/gallery2.dart';
 import 'package:ethiopia/pages/my_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import '../cubit/app_cubit_state.dart';
 import '../widget/app_large_text.dart';
 import 'detail_page.dart';
@@ -23,22 +24,110 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
-
-  static const LatLng _kLalibelaLatLng = LatLng(12.0307, 39.0446); // Coordinates for Lalibela, Ethiopia
-
-  static const CameraPosition _kLalibelaPosition = CameraPosition(
-    bearing: 0,
-    target: _kLalibelaLatLng,
-    tilt: 0,
-    zoom: 18,
-  );
 
 
   final user=FirebaseAuth.instance.currentUser!;
   late TabController _tabController;
   bool _isBookmarked = false;
+
+  final String category = 'historical and cultural';
+
+  Future<List<Map<String, dynamic>>> fetchImages(String categoryParam) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(Uri.parse('$serverUrl?category=$categoryParam'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      List<Map<String, dynamic>> images = [];
+      for (final data in jsonData) {
+        final dynamic picUrl = data['PIC_URL'];
+        final dynamic id = int.parse(data['ID'].toString());
+        if (picUrl != null) {
+          images.add({
+            'url': picUrl.toString(),
+            'id': id,
+          });
+        }
+      }
+      return images;
+    } else {
+      throw Exception('Failed to fetch images');
+    }
+
+
+
+  }
+  final String category2 = 'religious';
+
+  Future<List<Map<String, dynamic>>> fetchImages2(String categoryParam) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(
+        Uri.parse('$serverUrl?category=$categoryParam'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      List<Map<String, dynamic>> images = [];
+      for (final data in jsonData) {
+        final dynamic picUrl = data['PIC_URL'];
+        final dynamic id = int.parse(data['ID'].toString());
+        if (picUrl != null) {
+          images.add({
+            'url': picUrl.toString(),
+            'id': id,
+          });
+        }
+      }
+      return images;
+    } else {
+      throw Exception('Failed to fetch images');
+    }
+  }
+  final String category3 = 'landscapes';
+
+  Future<List<Map<String, dynamic>>> fetchImages3(String categoryParam) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(Uri.parse('$serverUrl?category=$categoryParam'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      List<Map<String, dynamic>> images = [];
+      for (final data in jsonData) {
+        final dynamic picUrl = data['PIC_URL'];
+        final dynamic id = int.parse(data['ID'].toString());
+        if (picUrl != null) {
+          images.add({
+            'url': picUrl.toString(),
+            'id': id,
+          });
+        }
+      }
+      return images;
+    } else {
+      throw Exception('Failed to fetch images');
+    }
+
+  }
+  final String category4 = 'hotels';
+  Future<List<Map<String, dynamic>>> fetchImages4(String categoryParam) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(Uri.parse('$serverUrl?category=$categoryParam'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      List<Map<String, dynamic>> images = [];
+      for (final data in jsonData) {
+        final dynamic picUrl = data['PIC_URL'];
+        final dynamic id = int.parse(data['ID'].toString());
+        if (picUrl != null) {
+          images.add({
+            'url': picUrl.toString(),
+            'id': id,
+          });
+        }
+      }
+      return images;
+    } else {
+      throw Exception('Failed to fetch images');
+    }
+
+  }
+
 
   final List<String> images = [
     "images/categories/Hist&cal/lalibela.jpg",
@@ -49,43 +138,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "images/categories/urban and rural/kuriftu.jpg",
 
   ];
-  final List<String> his = [
-    "images/categories/Hist&cal/Harar-Jugol.jpg",
-    "images/categories/Hist&cal/fassil.jpg",
-    "images/categories/Hist&cal/sof-omar.jpg",
-    "images/categories/Hist&cal/lalibela.jpg",
-    "images/categories/landscapes/danakil-2.jpg",
-    "images/categories/Hist&cal/axum-2.jpg"
-
-
-  ];
-  final List<String> Rel =[
-    "images/categories/religious/Holy Trinity Cathedr.jpg",
-    "images/categories/religious/negash.jpg",
-    "images/categories/religious/anwar.jpeg",
-    "images/categories/Hist&cal/debre-danos.jpg",
-  ];
-  final List<String> land =[
-    "images/categories/landscapes/danakil-2.jpg",
-    "images/categories/landscapes/blue.webp",
-    "images/categories/landscapes/tana.jpeg",
-    "images/categories/landscapes/dashen.jpg",
-    "images/categories/landscapes/Tullu_Dimtu.jpg",
-  ];
-  final List<String> Resorts =[
-    "images/categories/urban and rural/sheraton.jpg",
-    "images/categories/urban and rural/kuriftu.jpg",
-    "images/categories/urban and rural/emerald resort arbaminch.jpeg",
-    "images/categories/urban and rural/lisak.jpg",
-
-
-  ];
-  final List<String> rural =[
-    "images/categories/urban and rural/gurage.jpeg",
-    "images/categories/urban and rural/gamo.jpg",
-
-  ];
-
 
 
 
@@ -209,138 +261,186 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     child: TabBarView(
                       controller: _tabController,
                       children: [
-                        ListView.builder(
+                        SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          itemCount: his.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DetailPage(
-                                    image: his[index],
-
-                                  ),
-                                  ),
+                          child: FutureBuilder<List<Map<String, dynamic>>>(
+                            future: fetchImages(category),
+                            builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                              if (snapshot.hasData) {
+                                final List<Map<String, dynamic>> images = snapshot.data!;
+                                return Row(
+                                  children: images.map((image) {
+                                    final String imageUrl = image['url'];
+                                    final int imageId = image['id'];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 15, top: 10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => DetailPage(id: imageId,),)
+                                          );
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: Image.network(
+                                            imageUrl,
+                                            width: 250,
+                                            height: 250,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 );
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15, top: 10),
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-
-                                  color: Colors.white,
-                                  image: DecorationImage(
-
-                                    image: AssetImage(his[index]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-
-                              ),
-                            );
-                          },
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                         ),
-                        ListView.builder(
+                        SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          itemCount: Rel.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DetailPage(
-                                    image: Rel[index],
-
-                                  ),
-                                  ),
+                          child: FutureBuilder<List<Map<String, dynamic>>>(
+                            future: fetchImages2(category2),
+                            builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                              if (snapshot.hasData) {
+                                final List<Map<String, dynamic>> images = snapshot.data!;
+                                return Row(
+                                  children: images.map((image) {
+                                    final String imageUrl = image['url'];
+                                    final int imageId = image['id'];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 15, top: 10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => DetailPage(id: imageId,),)
+                                          );
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: Image.network(
+                                            imageUrl,
+                                            width: 250,
+                                            height: 250,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 );
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15, top: 10),
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-
-                                    image: AssetImage(Rel[index]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-
-                              ),
-                            );
-                          },
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                         ),
-                        ListView.builder(
+                        SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          itemCount: land.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DetailPage(
-                                    image: land[index],
-
-                                  ),),
+                          child: FutureBuilder<List<Map<String, dynamic>>>(
+                            future: fetchImages3(category3),
+                            builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                              if (snapshot.hasData) {
+                                final List<Map<String, dynamic>> images = snapshot.data!;
+                                return Row(
+                                  children: images.map((image) {
+                                    final String imageUrl = image['url'];
+                                    final int imageId = image['id'];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 15, top: 10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => DetailPage(id: imageId,),)
+                                          );
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: Image.network(
+                                            imageUrl,
+                                            width: 250,
+                                            height: 250,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 );
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15, top: 10),
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-
-                                    image: AssetImage(land[index]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-
-                              ),
-                            );
-                          },
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                         ),
-                        ListView.builder(
+                        SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          itemCount: Resorts.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DetailPage(
-                                    image: Resorts[index],
-
-                                  ),),
+                          child: FutureBuilder<List<Map<String, dynamic>>>(
+                            future: fetchImages4(category4),
+                            builder: (BuildContext context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                              if (snapshot.hasData) {
+                                final List<Map<String, dynamic>> images = snapshot.data!;
+                                return Row(
+                                  children: images.map((image) {
+                                    final String imageUrl = image['url'];
+                                    final int imageId = image['id'];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(right: 15, top: 10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => DetailPage(id: imageId,),)
+                                          );
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(15),
+                                          child: Image.network(
+                                            imageUrl,
+                                            width: 250,
+                                            height: 250,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 );
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(right: 15, top: 10),
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                  image: DecorationImage(
-
-                                    image: AssetImage(Resorts[index]),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-
-                              ),
-                            );
-                          },
+                              } else if (snapshot.hasError) {
+                                return Center(
+                                  child: Text('Error: ${snapshot.error}'),
+                                );
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
                         ),
-
                       ],
                     ),
                   ),
@@ -369,15 +469,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       itemCount: images.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => DetailPage(
-                                image: his[index],
-
-                              ),),
-                            ); // navigate to
-                          },
+                          // onTap: () {
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(builder: (context) => DetailPage(
+                          //       // image: his[index],
+                          //
+                          //     ),),
+                          //   ); // navigate to
+                          // },
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(

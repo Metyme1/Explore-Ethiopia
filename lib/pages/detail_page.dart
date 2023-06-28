@@ -14,8 +14,8 @@ class Comment {
 }
 
 class DetailPage extends StatefulWidget {
-  final String image;
-  DetailPage({required this.image});
+ final int id;
+ const DetailPage({required this.id});
 
 
   @override
@@ -63,41 +63,116 @@ class _DetailPageState extends State<DetailPage> {
 
     return '';
   }
+  Future<String> fetchImageUrl(int id) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(Uri.parse('$serverUrl?id=$id'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      if (jsonData.isNotEmpty) {
+        final dynamic picUrl = jsonData[0]['PIC_URL'];
+        if (picUrl != null) {
+          return picUrl.toString();
+        }
+      }
+    }
+    throw Exception('Failed to fetch image URL');
+  }
+  Future<String> fetchItemTitle(int id) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(Uri.parse('$serverUrl?id=$id'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      if (jsonData.isNotEmpty) {
+        final dynamic picUrl = jsonData[0]['TITLE'];
+        if (picUrl != null) {
+          return picUrl.toString();
+        }
+      }
+    }
+    throw Exception('Failed to fetch image URL');
+  }
+  Future<String> fetchItemDescription(int id) async {
+    final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+    final response = await http.get(Uri.parse('$serverUrl?id=$id'));
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body);
+      if (jsonData.isNotEmpty) {
+        final dynamic description = jsonData[0]['DESCRIPTION'];
+        if (description != null) {
+          return description.toString();
+        }
+      }
+    }
+    throw Exception('Failed to fetch item description');
+  }
 
-    @override
+
+
+  late Future<String> _title;
+  late Future<String> _imageUrl;
+  late Future<String> _description;
+
+  @override
+  void initState() {
+    super.initState();
+    _title = fetchItemTitle(widget.id);
+    _imageUrl = fetchImageUrl(widget.id);
+    _description=fetchItemDescription(widget.id);
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.maxFinite,
-        height: double.maxFinite,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 20,
-              top: 50,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.menu),
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: double.maxFinite,
-                  height: 300,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image:AssetImage(widget.image),
-                      fit: BoxFit.cover,
+
+        body: Container(
+          width: double.maxFinite,
+          height: double.maxFinite,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 20,
+                top: 50,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.menu),
+                      color: Colors.white,
                     ),
-                  ),
+                  ],
                 ),
+              ),
+              FutureBuilder<String>(
+                future: _imageUrl,
+                builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  if (snapshot.hasData) {
+                    final String imageUrl = snapshot.data!;
+                    return Container(
+                      width: double.maxFinite,
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(imageUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+
+
+
+
                 Positioned(
                   left: 10,
                   top: 20,
@@ -110,8 +185,8 @@ class _DetailPageState extends State<DetailPage> {
                   ),
                 ),
 
-              ],
-            ),
+
+
             Positioned(
               top: 280,
               child: Container(
@@ -131,14 +206,50 @@ class _DetailPageState extends State<DetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 20),
-                        Text(
-                          'Example Location',
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
+                      Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 300,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.8),
+                              Colors.transparent,
+                            ],
                           ),
                         ),
+    child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    FutureBuilder<String>(
+    future: _title,
+    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+    if (snapshot.hasData) {
+    final String title = snapshot.data!;
+    return Text(
+    title,
+    style: TextStyle(
+    color: Colors.black,
+    fontSize: 28,
+    fontWeight: FontWeight.bold,
+    ),
+    );
+    } else if (snapshot.hasError) {
+    return Center(
+    child: Text('Error: ${snapshot.error}'),
+    );
+    } else {
+    return Center(
+    child: CircularProgressIndicator(),
+    );
+    }
+    },
+    ),
                         SizedBox(height: 10),
                         Row(
                           children: [
@@ -172,13 +283,13 @@ class _DetailPageState extends State<DetailPage> {
                               )
                             ),
                             SizedBox(width: 5),
-                            Text(
-                              'City, Country',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 16,
-                              ),
-                            ),
+                            // Text(
+                            //   'title',
+                            //   style: TextStyle(
+                            //     color: Colors.grey,
+                            //     fontSize: 16,
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(height: 20),
@@ -190,14 +301,42 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text(
-                          'This is an example description of the location. You can add more details here. This is an example description of the location. You can add more details here.',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        SizedBox(height: 20),
+    Expanded(
+    child: FutureBuilder<String>(
+    future: _description,
+    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+    if (snapshot.hasData) {
+    final String description = snapshot.data!;
+    return SingleChildScrollView(
+    child: Text(
+    description,
+    style: TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    ),
+    ),
+    );
+    } else if (snapshot.hasError) {
+    return Center(
+    child: Text('Error: ${snapshot.error}'),
+    );
+    } else {
+    return Center(
+    child: CircularProgressIndicator(),
+    );
+    }
+    },
+    ),
+    ),
+    ],
+    ),
+    ),
+    ),
+
+
+
+
+                   SizedBox(height: 20),
                         Text(
                           'Add comment',
                           style: TextStyle(
@@ -283,14 +422,19 @@ class _DetailPageState extends State<DetailPage> {
                             },
                           ),
                         ),
-                      ],
+                      ]
                     ),
                   ),
                 ),
               ),
+            )
+          ]
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+
+
+
+
+      );
+
   }}
