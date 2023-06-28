@@ -6,12 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'map2.dart';
 
-class Comment {
-  final int id;
-  final String text;
-
-  Comment({required this.id, required this.text});
-}
 
 class DetailPage extends StatefulWidget {
  final int id;
@@ -23,18 +17,18 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  List<String> _comments = [
-    'Comment 1 text',
-    'Comment 2 text',
-    'Comment 3 text',
-    'Comment 4 text',
-    'Comment 5 text',
-    'Comment 6 text',
-  ]; // Make sure to initialize your comments list
-
-  int _selectedIndex = 0;
-  String _selectedCommentText = 'Comment 1 text';
-  bool _isBookmarked = false;
+  // List<String> _comments = [
+  //   'Comment 1 text',
+  //   'Comment 2 text',
+  //   'Comment 3 text',
+  //   'Comment 4 text',
+  //   'Comment 5 text',
+  //   'Comment 6 text',
+  // ]; // Make sure to initialize your comments list
+  //
+  // int _selectedIndex = 0;
+  // String _selectedCommentText = 'Comment 1 text';
+  // bool _isBookmarked = false;
 
   final TextEditingController _commentController = TextEditingController();
   Future<String> _fetchLocationIdFromDatabase() async {
@@ -105,12 +99,32 @@ class _DetailPageState extends State<DetailPage> {
     }
     throw Exception('Failed to fetch item description');
   }
-
-
+  Future<List<Map<String, dynamic>>> _fetchComments(int id) async {
+    try {
+      var response = await http.get(Uri.parse('https://ethiotravelapp.000webhostapp.com/comment/index.php?PLACE_ID=$id'));
+      if (response.statusCode == 200) {
+        List<dynamic> data = jsonDecode(response.body);
+        List<Map<String, dynamic>> comments = data.map((c) => {
+          'comment': c['COMMENT'],
+          'userId': c['USER_ID']
+        }).toList();
+        print(comments);
+        return comments;
+      } else {
+        throw Exception('Failed to fetch comments: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error fetching comments: $e');
+    }
+  }
 
   late Future<String> _title;
   late Future<String> _imageUrl;
   late Future<String> _description;
+  List<String> _comments = [];
+  int _selectedIndex = -1;
+  String _selectedCommentText = '';
+  Future<List<Map<String, dynamic>>>? _commentsFuture;
 
   @override
   void initState() {
@@ -118,6 +132,7 @@ class _DetailPageState extends State<DetailPage> {
     _title = fetchItemTitle(widget.id);
     _imageUrl = fetchImageUrl(widget.id);
     _description=fetchItemDescription(widget.id);
+    _commentsFuture = _fetchComments(widget.id);
   }
 
   @override
@@ -211,14 +226,14 @@ class _DetailPageState extends State<DetailPage> {
                       left: 0,
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 300,
+                        height: 400,
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Colors.black.withOpacity(0.8),
+                              Colors.teal.withOpacity(0.5),
                               Colors.transparent,
                             ],
                           ),
@@ -250,7 +265,7 @@ class _DetailPageState extends State<DetailPage> {
     }
     },
     ),
-                        SizedBox(height: 10),
+
                         Row(
                           children: [
                             InkWell(
@@ -261,8 +276,14 @@ class _DetailPageState extends State<DetailPage> {
                                     return Container(
                                       height: 300,
                                       child: Center(
-                                        child: Text('Map of the place'),
+                                        child: Text('Map of the place',
+                                        style: TextStyle(
+                                       color:Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                    ),
+
                                       ),
+                                      )
                                     );
                                   },
                                 );
@@ -292,7 +313,7 @@ class _DetailPageState extends State<DetailPage> {
                             // ),
                           ],
                         ),
-                        SizedBox(height: 20),
+
                         Text(
                           'Description',
                           style: TextStyle(
@@ -307,14 +328,12 @@ class _DetailPageState extends State<DetailPage> {
     builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
     if (snapshot.hasData) {
     final String description = snapshot.data!;
-    return SingleChildScrollView(
-    child: Text(
-    description,
-    style: TextStyle(
-    color: Colors.black,
-    fontSize: 16,
-    ),
-    ),
+    return Text(
+      description,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: 16,
+      ),
     );
     } else if (snapshot.hasError) {
     return Center(
@@ -382,58 +401,74 @@ class _DetailPageState extends State<DetailPage> {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          height: 300,
-                          child: ListView.builder(
-                            itemCount: _comments.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedIndex = index;
-                                    _selectedCommentText = _comments[_selectedIndex];
-                                  });
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(vertical: 10),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        // color: Colors.grey[300],
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'User $index',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                      FutureBuilder<List<Map<String, dynamic>>>(
+                        future: _commentsFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            List<Map<String, dynamic>>? comments = snapshot.data;
+                            return Column(
+                              children: <Widget>[
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: comments?.length,
+                                    itemBuilder: (BuildContext context, int index) {
+                                      String userId = comments![index]['userId'].toString();
+                                      String comment = comments[index]['comment'];
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedIndex = index;
+                                            _selectedCommentText = comment;
+                                          });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(vertical: 10),
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              bottom: BorderSide(
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'User $userId',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              SizedBox(height: 5),
+                                              Text(comment),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(_comments[index]),
-                                    ],
+                                      );
+                                    },
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                      ]
-                    ),
-                  ),
-                ),
-              ),
-            )
+                              ],
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(child: Text('Failed to fetch comments: ${snapshot.error}'));
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        },
+
+                      )
           ]
               ),
             ),
 
 
-
+    )
+              )
+            )
+            ]
+        )
+    )
 
       );
 

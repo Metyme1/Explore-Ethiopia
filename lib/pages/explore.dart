@@ -125,29 +125,62 @@ class _ExploreState extends State<Explore> {
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                  final provider =
-                  Provider.of<GoogleSign>(context, listen: false);
-                   provider.googleLogin();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainPage()),
-                  );
-                    },
-
-                    icon: FaIcon(FontAwesomeIcons.google, color: Colors.red,),
-                    label: Text("continue with Google"),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                      ),
-                      fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
+                  // ElevatedButton.icon(
+                  //   onPressed: () {
+                  // final provider =
+                  // Provider.of<GoogleSign>(context, listen: false);
+                  //  provider.googleLogin();
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => MainPage()),
+                  // );
+                  //   },
+                  //
+                  //   icon: FaIcon(FontAwesomeIcons.google, color: Colors.red,),
+                  //   label: Text("continue with Google"),
+                  //   style: ButtonStyle(
+                  //     backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
+                  //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  //       RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(30.0),
+                  //       ),
+                  //     ),
+                  //     fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
+                  //   ),
+                  // )
+              ElevatedButton.icon(
+                onPressed: () async {
+                  final provider = Provider.of<GoogleSign>(context, listen: false);
+                  GoogleSignInAccount? user = await provider.googleSignIn.currentUser;
+                  if (user == null) {
+                    // User is not signed in, prompt them to sign in
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text('Please sign in to continue.'),
+                    //   ),
+                    // );
+                    await provider.googleLogin();
+                  } else {
+                    // User is signed in, navigate to the main page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainPage()),
+                    );
+                  }
+                },
+                icon: FaIcon(FontAwesomeIcons.google, color: Colors.red,),
+                label: Text("continue with Google"),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
-                  )
+                  ),
+                  fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
+                ),
+              ),
+
                 ],
               ),
             ),

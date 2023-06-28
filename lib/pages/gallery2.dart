@@ -18,11 +18,11 @@ class AlbumModel {
 class Gallery extends StatelessWidget {
   final List<AlbumModel> albums = [
     AlbumModel(
-      'My Museum',
+      'Acient Materials',
       'images/categories/my musem/gasha.jpeg',
       [
         ImageModel(
-          'images/categories/my musem/crown.jpeg',
+          'images/categories/my musem/4M0R8D6_image_crop_134215.jpeg',
           'Description for image 1',
         ),
         ImageModel(
@@ -30,22 +30,22 @@ class Gallery extends StatelessWidget {
           'Description for image 2',
         ),
         ImageModel(
-          'images/categories/my musem/gasha.jpeg',
+          'images/categories/my musem/4O1SZO3_copyright_image_137301.jpeg',
           'Description for image 3',
         ),
         ImageModel(
-          'images/categories/my musem/jew.jpg',
+          'images/categories/my musem/4O1SZO3_copyright_image_137301.jpeg',
           'Description for image 4',
         ),
         ImageModel(
-          'images/categories/my musem/minilik caba.jpeg',
+          'images/categories/my musem/;ion-2.jpg',
           'Description for image 5',
         ),
       ],
     ),
     AlbumModel(
       'Events',
-      'images/categories/events/ireecha-1.jpg',
+      'images/categories/events/meskel-3.jpeg',
       [
         ImageModel(
           'images/categories/events/Eidalfitir.jpg',
@@ -95,8 +95,9 @@ class Gallery extends StatelessWidget {
         ),
       ],
     ),
+
     AlbumModel(
-      'My Museum',
+      'Religious ceremonies',
       'images/categories/my musem/crown.jpeg',
       [
         ImageModel(
@@ -122,7 +123,7 @@ class Gallery extends StatelessWidget {
       ],
     ),
     AlbumModel(
-      'My Museum',
+      'cultural foods',
       'images/categories/my musem/crown.jpeg',
       [
         ImageModel(
@@ -147,144 +148,83 @@ class Gallery extends StatelessWidget {
         ),
       ],
     ),
-    AlbumModel(
-      'My Museum',
-      'images/categories/my musem/crown.jpeg',
-      [
-        ImageModel(
-          'images/categories/my musem/crown.jpeg',
-          'Description for image 1',
-        ),
-        ImageModel(
-          'images/categories/my musem/dress.jpeg',
-          'Description for image 2',
-        ),
-        ImageModel(
-          'images/categories/my musem/gasha.jpeg',
-          'Description for image 3',
-        ),
-        ImageModel(
-          'images/categories/my musem/jew.jpg',
-          'Description for image 4',
-        ),
-        ImageModel(
-          'images/categories/my musem/minilik caba.jpeg',
-          'Description for image 5',
-        ),
-      ],
-    ),
-    AlbumModel(
-      'My Museum',
-      'images/categories/my musem/crown.jpeg',
-      [
-        ImageModel(
-          'images/categories/my musem/crown.jpeg',
-          'Description for image 1',
-        ),
-        ImageModel(
-          'images/categories/my musem/dress.jpeg',
-          'Description for image 2',
-        ),
-        ImageModel(
-          'images/categories/my musem/gasha.jpeg',
-          'Description for image 3',
-        ),
-        ImageModel(
-          'images/categories/my musem/jew.jpg',
-          'Description for image 4',
-        ),
-        ImageModel(
-          'images/categories/my musem/minilik caba.jpeg',
-          'Description for image 5',
-        ),
-      ],
-    ),
+
 
     // Add more albums here
   ];
 
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Scaffold(
+      backgroundColor: Colors.white24,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          'Albums',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.teal,
+          ),
+        ),
+        elevation: 0, // remove the underline
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: ListView.builder(
+          itemCount: albums.length,
+          itemBuilder: (context, index) {
+            final album = albums[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AlbumViewer(album: album)),
+                );
+              },
+              child: SizedBox(
+                height: 120,
+                child: Container(
+                  color: Colors.white,
+                  child: Row(
 
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        // appBar: AppBar(
-        //   title: Text('Gallery'),
-        //   backgroundColor: Colors.teal,
-        // ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                'Albums',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.teal,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-
-
-              child: ListView.builder(
-                itemCount: albums.length,
-                itemBuilder: (context, index) {
-                  final album = albums[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AlbumViewer(album: album)),
-                      );
-                    },
-                    child: SizedBox(
-                      height: 120,
-                      child: Container(
-                        color: Colors.black,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 100,
-                              width: 100,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  album.thumbnailUrl,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                album.albumName,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 100,
+                        width: 100,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.asset(
+                            album.thumbnailUrl,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
+                      Padding(
+                        padding: EdgeInsets.only(left: 10),
+                        child: Text(
+                          album.albumName,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.teal,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
   }
 }
+
 
 class AlbumViewer extends StatefulWidget {
   final AlbumModel album;

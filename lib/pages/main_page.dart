@@ -1,4 +1,5 @@
 import 'package:ethiopia/pages/currency.dart';
+import 'package:ethiopia/pages/gallery2.dart';
 import 'package:ethiopia/pages/home.dart';
 import 'package:ethiopia/pages/home2.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
    Currency(),
     Calender(),
-    MyPage()
+    Gallery()
   ];
 
   Widget _buildFloatingActionButton() {
@@ -54,7 +55,7 @@ class _MainPageState extends State<MainPage> {
       case 3:
         return FloatingActionButton(
           backgroundColor: Colors.teal,
-          child: Icon(Icons.person),
+          child: Icon(Icons.image),
           onPressed: () {
             // Add your onPressed function here
           },
@@ -102,7 +103,7 @@ class _MainPageState extends State<MainPage> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.person),
+                icon: Icon(Icons.image),
                 onPressed: () {
                   _onItemTapped(3);
                 },

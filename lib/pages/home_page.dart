@@ -1,20 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:ethiopia/cubit/app_cubit.dart';
-import 'package:ethiopia/pages/map2.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ethiopia/pages/currency.dart';
-import 'package:ethiopia/pages/gallery2.dart';
-import 'package:ethiopia/pages/my_page.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../cubit/app_cubit_state.dart';
 import '../widget/app_large_text.dart';
 import 'detail_page.dart';
+import 'explore.dart';
+import 'google_signin.dart';
+import 'main_page.dart';
 import 'map.dart';
 
 
@@ -196,28 +193,28 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             },
                           ),
                         ),
-                        Expanded(child: Container()),
-                        Text("Hello, "+user.displayName!,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal,
-                          ),),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(right: 20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.grey.withOpacity(0.5),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                user.photoURL!,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        )
+                        // Expanded(child: Container()),
+                        // Text("Hello, "+user.displayName!,
+                        //   style: TextStyle(
+                        //     fontSize: 16,
+                        //     fontWeight: FontWeight.bold,
+                        //     color: Colors.teal,
+                        //   ),),
+                        // Container(
+                        //   width: 50,
+                        //   height: 50,
+                        //   margin: const EdgeInsets.only(right: 20),
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(10),
+                        //     color: Colors.grey.withOpacity(0.5),
+                        //     image: DecorationImage(
+                        //       image: NetworkImage(
+                        //         user.photoURL!,
+                        //       ),
+                        //       fit: BoxFit.cover,
+                        //     ),
+                        //   ),
+                        // )
                       ],
                     ),
                   ),
@@ -552,63 +549,131 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
 
         drawer: Drawer(
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: 300,
-                width: 305,// Set the height to your desired value
-                child: DrawerHeader(
+          child: Container(
+            color: Colors.teal,
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 230,
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.teal,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(30),
+                    ),
                   ),
-
-                  child: Text(""),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.white,
+                        backgroundImage: NetworkImage(user.photoURL!) as ImageProvider<Object>,
+                      ),
+                      SizedBox(height: 10),
+                      // Text(
+                      //   'User Name',
+                      //   style: TextStyle(
+                      //     color: Colors.teal[900],
+                      //     fontSize: 22,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
+                      SizedBox(height: 5),
+              Text("Hello "+user.displayName!,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.teal,
+                ),),]
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ListTile(
-                leading: Icon(Icons.image),
-                title: Text('Gallery'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Gallery()),
-                  );
-                },
-              ),
-
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // ListTile(
-              //   leading: Icon(Icons.gps_fixed),
-              //   title: Text('Map'),
-              //   onTap: () {
-              //     Navigator.push(
-              //       context,
-              //       // MaterialPageRoute(builder: (context) => MapPage(ID: id,)),
-              //     );
-              //   },
-              // ),
-              SizedBox(
-                height: 20,
-              ),
-              ListTile(
-                leading: Icon(Icons.miscellaneous_services_rounded),
-                title: Text('Setting'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MyPage()),
-                  );
-                },
-              )
-            ],
+                SizedBox(height: 20),
+                ListTile(
+                  leading: Icon(
+                    Icons.home,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'Home',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainPage()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.bookmark,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'Bookmarks',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Navigate to Bookmarks screen
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'Settings',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Navigate to Settings screen
+                  },
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Logout',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                      onTap: () {
+                        final provider =
+                        Provider.of<GoogleSign>(context, listen: false);
+                        provider.logout();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Explore()),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-
+        )
   );
 
   }
@@ -667,3 +732,16 @@ class _CirclePainter extends BoxPainter {
     canvas.drawCircle(offset + CircleOffset, radius, _paint);
   }
 }
+// SizedBox(
+//   height: 20,
+// ),
+// ListTile(
+//   leading: Icon(Icons.gps_fixed),
+//   title: Text('Map'),
+//   onTap: () {
+//     Navigator.push(
+//       context,
+//       // MaterialPageRoute(builder: (context) => MapPage(ID: id,)),
+//     );
+//   },
+// ),
