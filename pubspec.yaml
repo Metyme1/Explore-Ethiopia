@@ -60,7 +60,7 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+5
   google_maps_flutter: ^2.2.8
   flutter_svg: ^0.22.0
-
+  easy_localization: ^3.0.2
 #  flutter_localizations:
 #    sdk: flutter
 #    version: ^0.0.0
@@ -92,6 +92,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/translations/
     - images/welcome/
     - images/categories/Hist&cal/
     - images/categories/events/
@@ -99,8 +100,6 @@ flutter:
     - images/categories/urban and rural/
     - images/categories/religious/
     - images/categories/landscapes/
-    - lang/en.json
-    - lang/fr.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

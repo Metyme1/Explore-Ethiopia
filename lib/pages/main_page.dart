@@ -1,13 +1,12 @@
-import 'package:ethiopia/pages/currency.dart';
+
 import 'package:ethiopia/pages/gallery2.dart';
 import 'package:ethiopia/pages/home.dart';
 import 'package:ethiopia/pages/home2.dart';
 import 'package:flutter/material.dart';
 
 import 'calender.dart';
+import 'curr.dart';
 import 'home_page.dart';
-import 'map.dart';
-import 'my_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

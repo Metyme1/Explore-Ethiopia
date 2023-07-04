@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'comment.dart';
 import 'map2.dart';
 
 
@@ -31,32 +33,57 @@ class _DetailPageState extends State<DetailPage> {
   // bool _isBookmarked = false;
 
   final TextEditingController _commentController = TextEditingController();
-  Future<String> _fetchLocationIdFromDatabase() async {
-    // Construct the URL for the query
-    final url = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
+  final String apiKey = 'AIzaSyDOmT3IuWcOq87wl4fUXlMDotiiJE2gzYw';
 
+  late GoogleMapController mapController;
+
+  Completer<GoogleMapController> _controller = Completer();
+  Set<Marker> _markers = {};
+
+  LatLng _center = LatLng(9.1450, 40.4897);
+  Future<void> _fetchLocationFromDatabase(int ID) async {
+    final url = 'https://ethiotravelapp.000webhostapp.com/place/index.php?id=$ID';
     try {
-      // Make a request to your database and receive the data as a JSON object
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
-        // Extract the ID of the selected location
-        final id = data['id'].toString();
+        final latitude = data[0]['LATITUDE'].toDouble();
+        final longitude = data[0]['LONGITUDE'].toDouble();
 
-        return id;
+        final LatLng location = LatLng(latitude, longitude);
+
+        setState(() {
+          _center = location;
+
+          final MarkerId markerId = MarkerId('myMarker');
+
+          final Marker marker = Marker(
+            markerId: markerId,
+            position: location,
+            infoWindow: InfoWindow(title: 'My Marker', snippet: 'Marker Details'),
+          );
+
+          _markers.clear();
+          _markers.add(marker);
+        });
+
+        mapController.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: _center,
+            zoom: 15.0,
+          ),
+        ));
       } else {
-        // handle error
         print('Error: ${response.statusCode}');
       }
     } catch (e) {
-      // handle error
       print('Error: $e');
     }
-
-    return '';
   }
+
+
   Future<String> fetchImageUrl(int id) async {
     final String serverUrl = 'https://ethiotravelapp.000webhostapp.com/place/index.php';
     final response = await http.get(Uri.parse('$serverUrl?id=$id'));
@@ -133,6 +160,7 @@ class _DetailPageState extends State<DetailPage> {
     _imageUrl = fetchImageUrl(widget.id);
     _description=fetchItemDescription(widget.id);
     _commentsFuture = _fetchComments(widget.id);
+
   }
 
   @override
@@ -226,14 +254,14 @@ class _DetailPageState extends State<DetailPage> {
                       left: 0,
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 400,
+                        height: 300,
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter,
                             colors: [
-                              Colors.teal.withOpacity(0.5),
+                              Colors.white.withOpacity(0.0),
                               Colors.transparent,
                             ],
                           ),
@@ -264,56 +292,11 @@ class _DetailPageState extends State<DetailPage> {
     );
     }
     },
+
     ),
 
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      height: 300,
-                                      child: Center(
-                                        child: Text('Map of the place',
-                                        style: TextStyle(
-                                       color:Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                    ),
 
-                                      ),
-                                      )
-                                    );
-                                  },
-                                );
-                              },
-                              child: IconButton(
-                                onPressed: () {
-                                  // Fetch the ID of the selected location from the database
-                                  _fetchLocationIdFromDatabase().then((id) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MapPage(ID: id),
-                                      ),
-                                    );
-                                  });
-                                },
-                                icon: Icon(Icons.location_on),
-                              )
-                            ),
-                            SizedBox(width: 5),
-                            // Text(
-                            //   'title',
-                            //   style: TextStyle(
-                            //     color: Colors.grey,
-                            //     fontSize: 16,
-                            //   ),
-                            // ),
-                          ],
-                        ),
-
+                      SizedBox(height: 20,),
                         Text(
                           'Description',
                           style: TextStyle(
@@ -347,7 +330,9 @@ class _DetailPageState extends State<DetailPage> {
     },
     ),
     ),
+
     ],
+
     ),
     ),
     ),
@@ -356,120 +341,77 @@ class _DetailPageState extends State<DetailPage> {
 
 
                    SizedBox(height: 20),
-                        Text(
-                          'Add comment',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        TextField(
-                          controller: _commentController,
-                          decoration: InputDecoration(
-                            hintText: 'Enter your comment here',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide.none,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CommentPage(id: widget.id)),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.message, color: Colors.teal),
+                          SizedBox(width: 5),
+                          Text(
+                            'Comments',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                              color: Colors.teal,
                             ),
-                            filled: true,
-                            fillColor: Colors.grey[200],
                           ),
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.teal),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _comments.add(_commentController.text);
-                              _selectedIndex = _comments.length - 1;
-                              _selectedCommentText = _comments[_selectedIndex];
-                              _commentController.clear();
-                            });
-                          },
-                          child: Text('Post comment'),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          'Comments',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                      FutureBuilder<List<Map<String, dynamic>>>(
-                        future: _commentsFuture,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<Map<String, dynamic>>? comments = snapshot.data;
-                            return Column(
-                              children: <Widget>[
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: comments?.length,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      String userId = comments![index]['userId'].toString();
-                                      String comment = comments[index]['comment'];
-                                      return InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            _selectedIndex = index;
-                                            _selectedCommentText = comment;
-                                          });
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(vertical: 10),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                width: 1,
-                                              ),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'User $userId',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              SizedBox(height: 5),
-                                              Text(comment),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
+                        ],
+                      ),
+                    ),
+
+
+
+
+                        SizedBox(height: 40,),
+                        SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Container(
+                                height: 400.0,
+                                child: GoogleMap(
+                                  onMapCreated: (GoogleMapController controller) {
+                                    mapController = controller;
+                                  },
+                                  initialCameraPosition: CameraPosition(
+                                    target: _center,
+                                    zoom: 10.0,
                                   ),
+                                  zoomControlsEnabled: true,  // Enable zoom controls
                                 ),
-                              ],
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(child: Text('Failed to fetch comments: ${snapshot.error}'));
-                          } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        },
+                              ),
+                              SizedBox(height: 10.0),
+                              ElevatedButton(
+                                onPressed: () {
+                                  _fetchLocationFromDatabase(widget.id);
+                                },
+                                child: Text('Fetch Location'),
+                              ),
+                              SizedBox(height: 10.0),
+                            ],
+                          ),
+                        ),
 
-                      )
-          ]
-              ),
-            ),
-
-
+    ]
+                    )
+    ),
+    ),
     )
-              )
+                )
+              ]
             )
-            ]
         )
-    )
+              );
 
-      );
+
+
+
+
 
   }}

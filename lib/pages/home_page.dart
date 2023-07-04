@@ -2,17 +2,18 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import '../cubit/app_cubit_state.dart';
 import '../widget/app_large_text.dart';
+import 'detailPage2.dart';
 import 'detail_page.dart';
 import 'explore.dart';
 import 'google_signin.dart';
 import 'main_page.dart';
-import 'map.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -130,9 +131,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "images/categories/Hist&cal/lalibela.jpg",
     "images/categories/Hist&cal/fassil.jpg",
     "images/categories/Hist&cal/sof-omar.jpg",
-    "images/categories/religious/al-negash.jpg",
+    "images/categories/landscapes/blue-1.jpg",
     "images/categories/landscapes/danakil-2.jpg",
-    "images/categories/urban and rural/kuriftu.jpg",
+    "images/categories/landscapes/Simien_Mountain.jpg",
 
   ];
 
@@ -142,9 +143,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "Lalibela",
     "Gonder",
     "sof-omar",
-    "al Negash",
+    "Blue Nile",
     "Danakil",
-    "Kuriftu",
+    "Simien_Mountain",
   ];
   final List<String> locations= [
     " North Wollo",
@@ -152,7 +153,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     "East of Ginnir",
     "Tigray Region ",
     "Afar Region",
-    "Deberzyit",
+    "Amhara Region",
   ];
   final List<String> map=[
 
@@ -174,6 +175,18 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100.0), // Set the height of the AppBar
+          child: AppBar(
+            backgroundColor: Colors.teal, // Set the background color of the AppBar
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(30),
+              ),
+            ),
+          //  title: Center(child: Text('Discover Ethiopia')),
+          ),
+        ),
       body:SingleChildScrollView(
 
             child: Column(
@@ -182,17 +195,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
 
                   Container(
-                    padding: const EdgeInsets.only(top: 70, left: 10),
+                    // padding: const EdgeInsets.only(top: 70, left: 10),
                     child: Row(
                       children: [
-                        Builder(
-                          builder: (context) => IconButton(
-                            icon: Icon(Icons.menu),
-                            onPressed: () {
-                              Scaffold.of(context).openDrawer();
-                            },
-                          ),
-                        ),
+                        // Builder(
+                        //   builder: (context) => IconButton(
+                        //     icon: Icon(Icons.menu),
+                        //     onPressed: () {
+                        //       Scaffold.of(context).openDrawer();
+                        //     },
+                        //   ),
+                        // ),
                         // Expanded(child: Container()),
                         // Text("Hello, "+user.displayName!,
                         //   style: TextStyle(
@@ -223,7 +236,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20),
-                    child: AppLargeText(text: "Discover", color: Colors.black54),
+                    child: AppLargeText(text: "Discover".tr(), color: Colors.black54),
                   ),
                   SizedBox(height: 30),
                   // tabbar
@@ -466,15 +479,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       itemCount: images.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          // onTap: () {
-                          //   Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => DetailPage(
-                          //       // image: his[index],
-                          //
-                          //     ),),
-                          //   ); // navigate to
-                          // },
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPage2(
+                                  image: images[index], // Pass the image asset path as a parameter
+                                ),
+                              ),
+                            );
+                          },
                           child: Container(
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
@@ -511,7 +525,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                 ),
                                 SizedBox(height: 10),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Row(
                                       children: [
@@ -520,13 +534,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                         //   color: Colors.grey,
                                         // ),
                                         SizedBox(width: 5),
-                                        Center(
-                                          child: AppText(
+
+                                           AppText(
                                             text:locations[index],
                                             color: Colors.grey,
                                             size: 16,
                                           ),
-                                        ),
+
                                       ],
                                     ),
 
@@ -633,6 +647,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   ),
                   title: Text(
                     'Settings',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Navigate to Settings screen
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    'Developers',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
