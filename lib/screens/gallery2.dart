@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ImageModel {
@@ -18,7 +19,7 @@ class AlbumModel {
 class Gallery extends StatelessWidget {
   final List<AlbumModel> albums = [
     AlbumModel(
-      'Acient Materials',
+      'Ancient Materials'.tr(),
       'images/categories/my musem/gasha.jpeg',
       [
         ImageModel(
@@ -30,7 +31,7 @@ class Gallery extends StatelessWidget {
           'Description for image 2',
         ),
         ImageModel(
-          'images/categories/my musem/4O1SZO3_copyright_image_137301.jpeg',
+          'images/categories/my musem/tesure.jpeg',
           'Description for image 3',
         ),
         ImageModel(
@@ -44,7 +45,7 @@ class Gallery extends StatelessWidget {
       ],
     ),
     AlbumModel(
-      'Events',
+      'Religious ceremonies'.tr(),
       'images/categories/events/meskel-3.jpeg',
       [
         ImageModel(
@@ -52,7 +53,7 @@ class Gallery extends StatelessWidget {
           'Description for image 1',
         ),
         ImageModel(
-          'images/categories/events/ireecha-1.jpg',
+          'images/categories/events/Meskel-Demera-_-EBC-_-Ethiopia.webp',
           'Description for image 2',
         ),
         ImageModel(
@@ -70,7 +71,7 @@ class Gallery extends StatelessWidget {
       ],
     ),
     AlbumModel(
-      'Destinations',
+      'Destinations'.tr(),
       'images/categories/Hist&cal/Gondar3.png',
       [
         ImageModel(
@@ -78,11 +79,11 @@ class Gallery extends StatelessWidget {
           'Description for image 1',
         ),
         ImageModel(
-          'images/categories/Hist&cal/lalibela.jpg',
+          'images/categories/Hist&cal/deberdamo-3.jpg',
           'Description for image 2',
         ),
         ImageModel(
-          'images/categories/my musem/gasha.jpeg',
+          'images/categories/Hist&cal/debere damo-2.jpg',
           'Description for image 3',
         ),
         ImageModel(
@@ -93,57 +94,73 @@ class Gallery extends StatelessWidget {
           'images/categories/urban and rural/arbaminch.jpg',
           'Description for image 5',
         ),
-      ],
-    ),
-
-    AlbumModel(
-      'Religious ceremonies',
-      'images/categories/my musem/crown.jpeg',
-      [
         ImageModel(
-          'images/categories/my musem/crown.jpeg',
-          'Description for image 1',
+          'images/categories/Hist&cal/fassil.jpg',
+          'Description for image 5',
         ),
         ImageModel(
-          'images/categories/my musem/dress.jpeg',
-          'Description for image 2',
-        ),
-        ImageModel(
-          'images/categories/my musem/gasha.jpeg',
-          'Description for image 3',
-        ),
-        ImageModel(
-          'images/categories/my musem/jew.jpg',
-          'Description for image 4',
-        ),
-        ImageModel(
-          'images/categories/my musem/minilik caba.jpeg',
+          'images/categories/Hist&cal/axum.jpg',
           'Description for image 5',
         ),
       ],
     ),
+
     AlbumModel(
-      'cultural foods',
-      'images/categories/my musem/crown.jpeg',
+      'Events'.tr(),
+      'images/categories/events/ireecha-1.jpg',
       [
         ImageModel(
-          'images/categories/my musem/crown.jpeg',
+          'images/categories/events/Ashenda_2.jpg',
           'Description for image 1',
         ),
         ImageModel(
-          'images/categories/my musem/dress.jpeg',
+          'images/categories/events/irrecha.jpg',
           'Description for image 2',
         ),
         ImageModel(
-          'images/categories/my musem/gasha.jpeg',
+          'images/categories/events/09290-BIG.jpg',
           'Description for image 3',
         ),
         ImageModel(
-          'images/categories/my musem/jew.jpg',
+          'images/categories/events/thumbs_b2_8d060efd908e3f94dcc1a4220a739a3c.jpg',
+          'Description for image 4',
+        ),
+        // ImageModel(
+        //   'images/categories/my musem/minilik caba.jpeg',
+        //   'Description for image 5',
+        // ),
+      ],
+    ),
+    AlbumModel(
+      'cultural Clothes',
+      'images/categories/cloths/oromo.jpg',
+      [
+        ImageModel(
+          'images/categories/cloths/Burgendy-Crowning-Kaba-Set-2-1.jpg',
+          'Description for image 1',
+        ),
+        ImageModel(
+          'images/categories/cloths/afar.webp',
+          'Description for image 2',
+        ),
+        ImageModel(
+          'images/categories/cloths/afaab8c3-0b41-4ab7-a1a4-e6271c00294c_16x9_1200x676.webp',
+          'Description for image 3',
+        ),
+        ImageModel(
+          'images/categories/cloths/_114977887_1914c764-da6c-4443-b539-fdbb22240ad5.jpg',
           'Description for image 4',
         ),
         ImageModel(
-          'images/categories/my musem/minilik caba.jpeg',
+          'images/categories/cloths/3fa5b09f5421b032f1c5645edb14b15b.jpg',
+          'Description for image 5',
+        ),
+        ImageModel(
+          'images/categories/cloths/_114977887_1914c764-da6c-4443-b539-fdbb22240ad5.jpg',
+          'Description for image 5',
+        ),
+        ImageModel(
+          'images/categories/cloths/Visit Ethiopia-63a9c7c78f7589.78354314.jpg',
           'Description for image 5',
         ),
       ],

@@ -1,5 +1,25 @@
 {
-  "Welcome": "እንኳን ደህና መጡ",
-  "continue with Google": "ጉግል ከ Google ጋር መደወል",
-  "Discover": "አግኝ"
+  "Ethiopia is a country that offers a rich and diverse range of tourist attractions. From its ancient history and cultural heritage to its natural wonders and vibrant music scene, there is something for everyone in this fascinating country.": "ኢትዮጵያ በርካታ የቱሪስት መስህቦችን የምታቀርብ ሀገር ነች።ከጥንታዊ ታሪኳና ባሕላዊ ቅርሶቿ እስከ ተፈጥሮአዊ ድንቆችና ደመቅ ያሉ የሙዚቃ ትእይንቶች በዚህች አስደናቂ ሀገር ውስጥ ለሁሉም ሰው የሚሆን ነገር አለ",
+  "Discover": "አግኝ",
+  "Signin to Explore more": "ተጨማሪ ለማሰስ ይግቡ",
+  "Historical and cultural places":"ታሪካዊ እና ባህላዊ ቦታዎች",
+  "Religious": "ሃይማኖታዊ",
+  "landscapes": "የመሬት ገጽታዎች",
+  "Popular sites": "ታዋቂ ጣቢያዎች",
+  "Home":"ቤት",
+  "Bookmarks": "ዕልባቶች",
+  "Settings": "ቅንብር",
+  "Developers":"ገንቢዎች",
+  "Logout":"ውጣ",
+  "Ethiopian Calendar": "የኢትዮጵያ የቀን መቁጠሪያ",
+  "Ancient Materials":"ጥንታዊ ቁሳቁሶች",
+  "Events":"Events",
+  "Destinations":"መድረሻዎች",
+  "Religious ceremonies":"ሃይማኖታዊ ሥርዓቶች",
+  "cultural Clothes": "የባህል ልብሶች",
+  "Hotel and resorts": "ሆቴል እና ሪዞርቶች",
+  "Description": "መግለጫ",
+  "Comments": "አስተያየቶች",
+  "Hello": "ሀሎ"
+
 }

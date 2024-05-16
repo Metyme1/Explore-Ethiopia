@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,18 +20,7 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  // List<String> _comments = [
-  //   'Comment 1 text',
-  //   'Comment 2 text',
-  //   'Comment 3 text',
-  //   'Comment 4 text',
-  //   'Comment 5 text',
-  //   'Comment 6 text',
-  // ]; // Make sure to initialize your comments list
-  //
-  // int _selectedIndex = 0;
-  // String _selectedCommentText = 'Comment 1 text';
-  // bool _isBookmarked = false;
+
 
   final TextEditingController _commentController = TextEditingController();
   final String apiKey = 'AIzaSyDOmT3IuWcOq87wl4fUXlMDotiiJE2gzYw';
@@ -39,6 +29,27 @@ class _DetailPageState extends State<DetailPage> {
 
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = {};
+  // Increase the zoom level of the map
+  void _zoomIn() {
+    mapController.animateCamera(CameraUpdate.zoomIn());
+  }
+
+// Decrease the zoom level of the map
+  void _zoomOut() {
+    mapController.animateCamera(CameraUpdate.zoomOut());
+  }
+  MapType _mapType = MapType.normal;
+
+// Toggle between normal and satellite map types
+  void _onMapTypeButtonPressed() {
+    setState(() {
+      if (_mapType == MapType.normal) {
+        _mapType = MapType.satellite;
+      } else {
+        _mapType = MapType.normal;
+      }
+    });
+  }
 
   LatLng _center = LatLng(9.1450, 40.4897);
   Future<void> _fetchLocationFromDatabase(int ID) async {
@@ -148,10 +159,7 @@ class _DetailPageState extends State<DetailPage> {
   late Future<String> _title;
   late Future<String> _imageUrl;
   late Future<String> _description;
-  List<String> _comments = [];
-  int _selectedIndex = -1;
-  String _selectedCommentText = '';
-  Future<List<Map<String, dynamic>>>? _commentsFuture;
+
 
   @override
   void initState() {
@@ -159,7 +167,7 @@ class _DetailPageState extends State<DetailPage> {
     _title = fetchItemTitle(widget.id);
     _imageUrl = fetchImageUrl(widget.id);
     _description=fetchItemDescription(widget.id);
-    _commentsFuture = _fetchComments(widget.id);
+
 
   }
 
@@ -169,6 +177,7 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
 
         body: Container(
+
           width: double.maxFinite,
           height: double.maxFinite,
           child: Stack(
@@ -231,7 +240,7 @@ class _DetailPageState extends State<DetailPage> {
 
 
             Positioned(
-              top: 280,
+              top: 290,
               child: Container(
                 padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
                 width: MediaQuery.of(context).size.width,
@@ -239,8 +248,8 @@ class _DetailPageState extends State<DetailPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
                 ),
                 child: SingleChildScrollView(
@@ -254,18 +263,18 @@ class _DetailPageState extends State<DetailPage> {
                       left: 0,
                       child: Container(
                         width: MediaQuery.of(context).size.width,
-                        height: 300,
+                        height: 350,
                         padding: EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                            colors: [
-                              Colors.white.withOpacity(0.0),
-                              Colors.transparent,
-                            ],
-                          ),
-                        ),
+                        // decoration: BoxDecoration(
+                        //   gradient: LinearGradient(
+                        //     begin: Alignment.bottomCenter,
+                        //     end: Alignment.topCenter,
+                        //     colors: [
+                        //       Colors.teal.withOpacity(0.5),
+                        //       Colors.transparent,
+                        //     ],
+                        //   ),
+                        // ),
     child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -298,7 +307,7 @@ class _DetailPageState extends State<DetailPage> {
 
                       SizedBox(height: 20,),
                         Text(
-                          'Description',
+                          'Description'.tr(),
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -374,7 +383,7 @@ class _DetailPageState extends State<DetailPage> {
                           child: Column(
                             children: [
                               Container(
-                                height: 400.0,
+                                height: 500.0,
                                 child: GoogleMap(
                                   onMapCreated: (GoogleMapController controller) {
                                     mapController = controller;
@@ -383,20 +392,66 @@ class _DetailPageState extends State<DetailPage> {
                                     target: _center,
                                     zoom: 10.0,
                                   ),
-                                  zoomControlsEnabled: true,  // Enable zoom controls
+                                  zoomControlsEnabled: false,  // Disable default zoom controls
+                                  markers: _markers.toSet(),  // Set the markers on the map
+                                  mapType: _mapType,  // Set the map type based on the selected value
                                 ),
                               ),
                               SizedBox(height: 10.0),
-                              ElevatedButton(
-                                onPressed: () {
-                                  _fetchLocationFromDatabase(widget.id);
-                                },
-                                child: Text('Fetch Location'),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      _zoomIn();
+                                    },
+                                    icon: Icon(Icons.add),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      _zoomOut();
+                                    },
+                                    icon: Icon(Icons.remove),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      _fetchLocationFromDatabase(widget.id);
+                                    },
+                                    icon: Icon(Icons.location_on),
+                                  ),
+                                  SizedBox(width: 10.0),
+                                  DropdownButton<MapType>(
+                                    value: _mapType,
+                                    items: [
+                                      DropdownMenuItem<MapType>(
+                                        value: MapType.normal,
+                                        child: Text('Normal'),
+                                      ),
+                                      DropdownMenuItem<MapType>(
+                                        value: MapType.satellite,
+                                        child: Text('Satellite'),
+                                      ),
+                                      DropdownMenuItem<MapType>(
+                                        value: MapType.hybrid,
+                                        child: Text('Hybrid'),
+                                      ),
+                                      DropdownMenuItem<MapType>(
+                                        value: MapType.terrain,
+                                        child: Text('Terrain'),
+                                      ),
+                                    ],
+                                    onChanged: (MapType? value) {
+                                      setState(() {
+                                        _mapType = value ?? MapType.normal;
+                                      });
+                                    },
+                                  ),
+                                ],
                               ),
                               SizedBox(height: 10.0),
                             ],
                           ),
-                        ),
+                        )
 
     ]
                     )
@@ -415,3 +470,54 @@ class _DetailPageState extends State<DetailPage> {
 
 
   }}
+
+// Future<void> _fetchLocationFromDatabase(int id) async {
+//   final url = 'https://ethiotravelapp.000webhostapp.com/place/index.php?id=$id';
+//
+//   try {
+//     final response = await http.get(Uri.parse(url));
+//
+//     if (response.statusCode == 200) {
+//       final data = jsonDecode(response.body);
+//
+//       final latitude = data[0]['LATITUDE'].toDouble();
+//       final longitude = data[0]['LONGITUDE'].toDouble();
+//
+//       final location = LatLng(latitude, longitude);
+//
+//       setState(() async {
+//         _center = location;
+//
+//         final MarkerId markerId = MarkerId('myMarker');
+//
+//         final Uint8List? markerIconBytes = await getBytesFromAsset('images/logo.jpg', 100);
+//         final BitmapDescriptor markerIcon = BitmapDescriptor.fromBytes(markerIconBytes!);
+//
+//         final Marker marker = Marker(
+//           markerId: markerId,
+//           position: location,
+//           icon: markerIcon,
+//           infoWindow: InfoWindow(title: 'My Marker', snippet: 'Marker Details'),
+//         );
+//
+//         _markers.clear();
+//         _markers.add(marker);
+//
+//         // Set the map type to satellite
+//         _mapType = MapType.satellite;
+//       });
+//
+//       // Animate the camera to the new position and zoom level
+//       mapController.animateCamera(CameraUpdate.newCameraPosition(
+//         CameraPosition(
+//           target: _center,
+//           zoom: 15.0,
+//         ),
+//       ));
+//     } else {
+//       print('Error: ${response.statusCode}');
+//     }
+//   } catch (e) {
+//     print('Error: $e');
+//   }
+// }

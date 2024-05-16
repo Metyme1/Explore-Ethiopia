@@ -1,6 +1,8 @@
-import 'package:ethiopia/pages/main_page.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/main_page.dart';
 
 class ExploreButton extends StatelessWidget {
   bool? isResponsive;

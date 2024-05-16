@@ -1,17 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ethiopia/pages/main_page.dart';
-import 'package:ethiopia/widget/app_large_text.dart';
-import 'package:ethiopia/widget/app_text.dart';
-import 'package:ethiopia/widget/explore_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import 'google_signin.dart';
+import 'main_page.dart';
 
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);
@@ -38,6 +33,7 @@ bool isclicked=false;
               image: DecorationImage(
                 image: AssetImage(_image),
                 fit: BoxFit.cover,
+                filterQuality: FilterQuality.high,
               ),
             ),
           ),Positioned(
@@ -84,35 +80,49 @@ bool isclicked=false;
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AppLargeText(
-                    text: "Welcome".tr(),
-                    color: Colors.white,
-                  ),
-                  AppText(
-                    text: "to Ethiopia",
-                    size: 30,
-                    color: Colors.white,
-                  ),
+                  // AppLargeText(
+                  //   text: "Welcome to Ethiopia".tr(),
+                  //   color: Colors.white,
+                  // ),
+                  // AppText(
+                  //   text: "to Ethiopia",
+                  //   size: 30,
+                  //   color: Colors.white,
+                  // ),
                   SizedBox(height: 20),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: AppText(
-                      text:
-                      "The magic of Ethiopia challenges preconceptions and defies expectations, beckoning visitors to explore its mysteries and discover its secrets.",
-                      color: Colors.white,
-                      size: 14,
-                      //textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 40),
-                  // GestureDetector(
+                    child: Text(
 
+                      "Ethiopia is a country that offers a rich and diverse range of tourist attractions. From its ancient history and cultural heritage to its natural wonders and vibrant music scene, there is something for everyone in this fascinating country.".tr(),
+                      style: TextStyle(
+
+                        fontWeight: FontWeight.normal,  // make the text bold
+                        color: Colors.white,
+                        fontSize: 17,// set the text color to teal
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 5,
+                            offset: Offset(2, 2),
+                          ),
+                        ],  // add a shadow effect to the text
+                      ),
+                    ),
+
+                  ),
+                  // SizedBox(height: 40),
+                  // // GestureDetector(
+                  //
                   SizedBox(
                     height: 20,
                   ),
 
-                  ElevatedButton.icon(
+                  isclicked==false?    ElevatedButton.icon(
                     onPressed: () async {
+                      setState(() {
+                        isclicked=true;
+                      });
                       final provider = Provider.of<GoogleSign>(context, listen: false);
                       GoogleSignInAccount? user = await provider.googleSignIn.currentUser;
                       if (user == null) {
@@ -120,13 +130,14 @@ bool isclicked=false;
                         await provider.googleLogin();
                       }
                       // Navigate to the email selection page immediately after signing in
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainPage()),
-                      );
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainPage()));
+                      // Navigator.pushre(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => MainPage()),
+                      // );
                     },
                     icon: FaIcon(FontAwesomeIcons.google, color: Colors.red,),
-                    label: isclicked ==false? Text("continue with Google".tr()):CircularProgressIndicator(color: Colors.white,),
+                    label: isclicked ==false? Text("Signin to Explore more  ".tr()):CircularProgressIndicator(color: Colors.white,),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.teal),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -136,7 +147,7 @@ bool isclicked=false;
                       ),
                       fixedSize: MaterialStateProperty.all<Size>(Size(300, 50)),
                     ),
-                  ),
+                  ):CircularProgressIndicator(color: Colors.white,)
 
                 ],
               ),

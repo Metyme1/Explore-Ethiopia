@@ -1,11 +1,11 @@
 
-import 'package:ethiopia/pages/gallery2.dart';
-import 'package:ethiopia/pages/home.dart';
-import 'package:ethiopia/pages/home2.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-import 'calender.dart';
+import '../Etc.dart';
+//import 'calender.dart';
 import 'curr.dart';
+import 'gallery2.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -21,9 +21,28 @@ class _MainPageState extends State<MainPage> {
   final List<Widget> _pages = [
     HomePage(),
    Currency(),
-    Calender(),
+    CalendarPagep(),
     Gallery()
   ];
+  final googleSignIn = GoogleSignIn();
+
+  Future<void> _signIn() async {
+    try {
+      final account = await googleSignIn.signIn();
+      print("starat");
+      print(account);
+      print("hekomnfjhfkj");
+      // Handle successful sign-in
+    } catch (e) {
+      // Handle sign-in failure
+    }
+  }
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("initial page ");
+  }
 
   Widget _buildFloatingActionButton() {
     switch (_selectedIndex) {
@@ -33,6 +52,7 @@ class _MainPageState extends State<MainPage> {
           child: Icon(Icons.travel_explore),
           onPressed: () {
             // Add your onPressed function here
+            _signIn();
           },
         );
       case 1:

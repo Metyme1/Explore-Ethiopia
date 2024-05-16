@@ -50,7 +50,7 @@ dependencies:
   google_sign_in: ^6.1.4
   font_awesome_flutter: ^10.4.0
   provider: ^6.0.5
-
+  abushakir: ^1.0.0
   cupertino_icons: ^1.0.2
   bloc:
   flutter_bloc:
@@ -100,6 +100,7 @@ flutter:
     - images/categories/urban and rural/
     - images/categories/religious/
     - images/categories/landscapes/
+    - images/categories/cloths/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

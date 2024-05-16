@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100.0), // Set the height of the AppBar
           child: AppBar(
-            backgroundColor: Colors.teal, // Set the background color of the AppBar
+            backgroundColor: Colors.brown, // Set the background color of the AppBar
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
                 bottom: Radius.circular(30),
@@ -192,48 +192,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-
-                  Container(
-                    // padding: const EdgeInsets.only(top: 70, left: 10),
-                    child: Row(
-                      children: [
-                        // Builder(
-                        //   builder: (context) => IconButton(
-                        //     icon: Icon(Icons.menu),
-                        //     onPressed: () {
-                        //       Scaffold.of(context).openDrawer();
-                        //     },
-                        //   ),
-                        // ),
-                        // Expanded(child: Container()),
-                        // Text("Hello, "+user.displayName!,
-                        //   style: TextStyle(
-                        //     fontSize: 16,
-                        //     fontWeight: FontWeight.bold,
-                        //     color: Colors.teal,
-                        //   ),),
-                        // Container(
-                        //   width: 50,
-                        //   height: 50,
-                        //   margin: const EdgeInsets.only(right: 20),
-                        //   decoration: BoxDecoration(
-                        //     borderRadius: BorderRadius.circular(10),
-                        //     color: Colors.grey.withOpacity(0.5),
-                        //     image: DecorationImage(
-                        //       image: NetworkImage(
-                        //         user.photoURL!,
-                        //       ),
-                        //       fit: BoxFit.cover,
-                        //     ),
-                        //   ),
-                        // )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Container(
                     margin: const EdgeInsets.only(left: 20),
                     child: AppLargeText(text: "Discover".tr(), color: Colors.black54),
@@ -246,16 +204,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       child: TabBar(
                         labelPadding: const EdgeInsets.only(left: 20, right: 20,),
                         controller: _tabController,
-                        labelColor: Colors.teal,
+                        labelColor: Colors.brown,
                         unselectedLabelColor: Colors.grey,
                         isScrollable: true,
                         indicatorSize: TabBarIndicatorSize.label,
-                        indicator: CircleTabIndicator(color: Colors.teal, radius: 5),
+                        indicator: CircleTabIndicator(color: Colors.brown, radius: 5),
                         tabs: [
-                          Tab(text: "Historical and cultural places"),
-                          Tab(text: "Religious"),
-                          Tab(text: "landscapes"),
-                          Tab(text: "Hotel and resorts"),
+                          Tab(text: "Historical and cultural places".tr()),
+                          Tab(text: "Religious".tr()),
+                          Tab(text: "landscapes".tr()),
+                          Tab(text: "Hotel and resorts".tr()),
                           // Tab(text: "rural"),
                         ],
                       ),
@@ -461,100 +419,93 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: AppLargeText(text: "Popular sites", size: 22, color: Colors.teal),
+                      child: AppLargeText(text: "Popular sites".tr(), size: 22, color: Colors.teal),
                     ),
                   ),
                   SizedBox(height: 20),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        childAspectRatio: 0.7,
-                      ),
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: images.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailPage2(
-                                  image: images[index], // Pass the image asset path as a parameter
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    image: DecorationImage(
-                                      image: AssetImage(images[index]),
-                                      fit: BoxFit.cover,
-                                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          images.length,
+                              (index) => GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPage2(
+                                    image: images[index], // Pass the image asset path as a parameter
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                AppText(
-                                  text: names[index],
-                                  color: Colors.black87,
-                                  size: 18,
-                                  weight: FontWeight.bold,
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        // Icon(
-                                        //   Icons.location_on,
-                                        //   color: Colors.grey,
-                                        // ),
-                                        SizedBox(width: 5),
-
-                                           AppText(
-                                            text:locations[index],
-                                            color: Colors.grey,
-                                            size: 16,
-                                          ),
-
-                                      ],
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 40),
+                              child: Container(
+                                width: 200,
+                                margin: const EdgeInsets.only(right: 20),
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3), // changes position of shadow
                                     ),
-
                                   ],
                                 ),
-                              ],
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        image: DecorationImage(
+                                          image: AssetImage(images[index]),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    AppText(
+                                      text: names[index],
+                                      color: Colors.black87,
+                                      size: 18,
+                                      weight: FontWeight.bold,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 5),
+                                            AppText(
+                                              text:locations[index],
+                                              color: Colors.grey,
+                                              size: 16,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
                   )
-                ]
 
+                ]
             ),
 
 
@@ -564,7 +515,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
         drawer: Drawer(
           child: Container(
-            color: Colors.teal,
+            color: Colors.brown,
             child: Column(
               children: <Widget>[
                 Container(
@@ -585,16 +536,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         backgroundImage: NetworkImage(user.photoURL!) as ImageProvider<Object>,
                       ),
                       SizedBox(height: 10),
-                      // Text(
-                      //   'User Name',
-                      //   style: TextStyle(
-                      //     color: Colors.teal[900],
-                      //     fontSize: 22,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
+
                       SizedBox(height: 5),
-              Text("Hello "+user.displayName!,
+              Text("Hello "+user.displayName!.tr(),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -609,7 +553,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     color: Colors.white,
                   ),
                   title: Text(
-                    'Home',
+                    'Home'.tr(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -625,53 +569,32 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.bookmark,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'Bookmarks',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to Bookmarks screen
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to Settings screen
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
                     Icons.person,
                     color: Colors.white,
                   ),
                   title: Text(
-                    'Developers',
+                    'Developers'.tr(),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
                   onTap: () {
-                    Navigator.pop(context);
-                    // Navigate to Settings screen
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      isDismissible: true,
+                      isScrollControlled: true,
+                      builder: (BuildContext context) {
+                        return Align(
+                          alignment: Alignment.centerRight,
+                          child: FractionallySizedBox(
+                            widthFactor: 0.8,
+                            child: NotificationsBottomSheet(),
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
                 Expanded(
@@ -683,7 +606,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         color: Colors.white,
                       ),
                       title: Text(
-                        'Logout',
+                        'Logout'.tr(),
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -763,16 +686,69 @@ class _CirclePainter extends BoxPainter {
     canvas.drawCircle(offset + CircleOffset, radius, _paint);
   }
 }
-// SizedBox(
-//   height: 20,
-// ),
-// ListTile(
-//   leading: Icon(Icons.gps_fixed),
-//   title: Text('Map'),
-//   onTap: () {
-//     Navigator.push(
-//       context,
-//       // MaterialPageRoute(builder: (context) => MapPage(ID: id,)),
-//     );
-//   },
-// ),
+
+class NotificationsBottomSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 500,
+      color: Colors.brown,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Developers',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Mety Million',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Beamlak Tadesse',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Bisrat Yared',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 10),
+
+
+                Text(
+                  'Matyas Sina',
+                  style: TextStyle(
+                    color: Colors. white,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(width: 30,),
+
+
+
+
+
+
+          ],
+        ),
+      ),
+    );
+  }
+}

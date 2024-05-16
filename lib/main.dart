@@ -1,9 +1,9 @@
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ethiopia/pages/detail_page.dart';
-import 'package:ethiopia/pages/explore.dart';
+import 'package:ethiopia/screens/cur.dart';
+import 'package:ethiopia/screens/explore.dart';
+import 'package:ethiopia/screens/google_signin.dart';
 
-import 'package:ethiopia/pages/google_signin.dart';
 
 import 'package:provider/src/change_notifier_provider.dart';
 
@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         locale: context.locale,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            fontFamily: 'Coppins',
             primarySwatch: Colors.blue,
           ),
           home:Explore(),
