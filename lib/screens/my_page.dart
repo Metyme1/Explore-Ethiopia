@@ -20,7 +20,7 @@ class MyPage extends StatelessWidget {
          height: 100,
 
          decoration: BoxDecoration(
-           color: Colors.teal,
+           color: Colors.brown,
            borderRadius: BorderRadius.only(
              bottomLeft: Radius.circular(0),
              bottomRight: Radius.circular(0),
@@ -46,7 +46,7 @@ class MyPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: Colors.brown,
                 ),
               ),
               SizedBox(height: 20),
@@ -55,7 +55,7 @@ class MyPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: Colors.brown,
                 ),
               )
             ],
