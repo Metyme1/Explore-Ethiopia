@@ -515,7 +515,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
         drawer: Drawer(
           child: Container(
-            color: Colors.brown,
+            color: Colors.brown[800],
             child: Column(
               children: <Widget>[
                 Container(
@@ -525,6 +525,11 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     color: Colors.white,
                     borderRadius: BorderRadius.vertical(
                       bottom: Radius.circular(30),
+                    ),
+                    gradient: LinearGradient(
+                      colors: [Colors.brown, Colors.brown[700]!],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
                   ),
                   child: Column(
@@ -536,29 +541,21 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         backgroundImage: NetworkImage(user.photoURL!) as ImageProvider<Object>,
                       ),
                       SizedBox(height: 10),
-
-                      SizedBox(height: 5),
-              Text("Hello "+user.displayName!.tr(),
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown,
-                ),),]
+                      Text(
+                        "Hello, ${user.displayName}".tr(),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 20),
-                ListTile(
-                  leading: Icon(
-                    Icons.home,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'Home'.tr(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
+                _buildListTile(
+                  icon: Icons.home,
+                  title: 'Home',
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(
@@ -567,18 +564,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     );
                   },
                 ),
-                ListTile(
-                  leading: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'Developers'.tr(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
+                _buildListTile(
+                  icon: Icons.person,
+                  title: 'Developers',
                   onTap: () {
                     showModalBottomSheet(
                       context: context,
@@ -597,24 +585,28 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     );
                   },
                 ),
+                _buildListTile(
+                  icon: Icons.settings,
+                  title: 'Settings',
+                  onTap: () {
+                    // Add your Settings page navigation here
+                  },
+                ),
+                _buildListTile(
+                  icon: Icons.help,
+                  title: 'Help',
+                  onTap: () {
+                    // Add your Help page navigation here
+                  },
+                ),
                 Expanded(
                   child: Align(
                     alignment: FractionalOffset.bottomCenter,
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ),
-                      title: Text(
-                        'Logout'.tr(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                        ),
-                      ),
+                    child: _buildListTile(
+                      icon: Icons.logout,
+                      title: 'Logout',
                       onTap: () {
-                        final provider =
-                        Provider.of<GoogleSign>(context, listen: false);
+                        final provider = Provider.of<GoogleSign>(context, listen: false);
                         provider.logout();
                         Navigator.push(
                           context,
@@ -627,11 +619,28 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
               ],
             ),
           ),
-        )
+        ),
   );
 
   }
 }
+Widget _buildListTile({required IconData icon, required String title, required Function() onTap}) {
+  return ListTile(
+    leading: Icon(
+      icon,
+      color: Colors.white,
+    ),
+    title: Text(
+      title.tr(),
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+      ),
+    ),
+    onTap: onTap,
+  );
+}
+
 
 class AppText extends StatelessWidget {
   final String text;
