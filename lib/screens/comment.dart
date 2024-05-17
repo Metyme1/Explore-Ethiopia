@@ -348,7 +348,7 @@ class _CommentPageState extends State<CommentPage> {
       // ),
     
         body: Container(
-          color: Colors.teal,
+          color: Colors.brown,
           child: Center(
             child: Container(
               height: 600,
@@ -392,6 +392,9 @@ class _CommentPageState extends State<CommentPage> {
                                 (BuildContext context, int index) {
                               String userId = comments![index]['userId'].toString();
                               String comment = comments[index]['comment'];
+                              String name = comments[index]['name'] ?? 'Mety Million';
+
+
                               return InkWell(
                                 onTap: () {
                                   // TODO: Handle comment selection
@@ -409,11 +412,11 @@ class _CommentPageState extends State<CommentPage> {
                                             'Your comment',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.teal,
+                                              color: Colors.brown,
                                             ),
                                           ),
                                         Text(
-                                          'User $userId',
+                                          'User: $name',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -451,8 +454,10 @@ class _CommentPageState extends State<CommentPage> {
         ),
 
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown,
+        foregroundColor: Colors.white,
         onPressed :  _submitComment,
-        child: isclickedFloat!=true? Icon(Icons.send):CircularProgressIndicator( color: Colors.white,),
+        child: isclickedFloat!=true? Icon(Icons.send):CircularProgressIndicator( color: Colors.brown,),
       ),
       bottomSheet: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),

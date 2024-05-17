@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../Etc.dart';
-//import 'calender.dart';
 import 'curr.dart';
 import 'gallery2.dart';
 import 'home_page.dart';
@@ -20,7 +17,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     HomePage(),
-   Currency(),
+    Currency(),
     CalendarPagep(),
     Gallery()
   ];

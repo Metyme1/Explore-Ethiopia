@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:ethiopia/calendar1/GregorianCalendar.dart';
 import 'package:ethiopia/screens/converter.dart';
+import 'package:ethiopia/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'calendar1/EthiopianCalendar.dart';
 
@@ -37,7 +38,7 @@ class _CalendarPageState extends State<CalendarPagep> {
             child: Container(
               decoration: BoxDecoration(
                 // border: Border.all(),
-                color: Colors.teal,
+                color: Colors.brown,
                 borderRadius: BorderRadius.circular(7),
               ),
               child: Center(
@@ -121,7 +122,7 @@ class _CalendarPageState extends State<CalendarPagep> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              color: date.isHoliday ? Colors.teal : null,
+              color: date.isHoliday ? Colors.brown : null,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -186,8 +187,17 @@ class _CalendarPageState extends State<CalendarPagep> {
     return Scaffold(
 
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.brown,
         title: Center(child: Text('Ethiopian Calendar')),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+            );
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(Icons.compare_arrows),
@@ -302,7 +312,7 @@ class _CalendarPageState extends State<CalendarPagep> {
 
                             border: Border(
                               right: BorderSide(
-                                color: Colors.teal,
+                                color: Colors.brown,
                                 width: 6,
                               ),
                             ),

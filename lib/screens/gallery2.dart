@@ -176,13 +176,13 @@ class Gallery extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white24,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.brown,
         title: Text(
           'Albums',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Colors.teal,
+            color: Colors.white,
           ),
         ),
         elevation: 0, // remove the underline
@@ -226,7 +226,7 @@ class Gallery extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.teal,
+                            color: Colors.brown,
                           ),
                         ),
                       ),
