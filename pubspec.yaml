@@ -61,6 +61,8 @@ dependencies:
   google_maps_flutter: ^2.2.8
   flutter_svg: ^0.22.0
   easy_localization: ^3.0.2
+  flutter_rating_bar: ^4.0.0
+
 #  flutter_localizations:
 #    sdk: flutter
 #    version: ^0.0.0
@@ -101,6 +103,10 @@ flutter:
     - images/categories/religious/
     - images/categories/landscapes/
     - images/categories/cloths/
+  fonts:
+    - family: TimesNewRoman
+      fonts:
+        - asset: fonts/times_new_roman.ttf
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

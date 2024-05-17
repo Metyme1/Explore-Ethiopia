@@ -176,28 +176,45 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0), // Set the height of the AppBar
+          preferredSize: Size.fromHeight(70.0), // Set the height of the AppBar
           child: AppBar(
             backgroundColor: Colors.brown, // Set the background color of the AppBar
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(30),
+
               ),
             ),
-          //  title: Center(child: Text('Discover Ethiopia')),
+
+            title:Text(
+                'Discover',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 30, // Set the font size of the title
+                  fontWeight: FontWeight.bold,
+                  fontFamily:"TimesNewRoman"
+                ),
+              ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.white,
+                  backgroundImage: NetworkImage(user.photoURL!) as ImageProvider<Object>,
+                ),
+              ),
+            ],
+
+            ),
           ),
-        ),
+
+
       body:SingleChildScrollView(
 
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 20),
-                    child: AppLargeText(text: "Discover".tr(), color: Colors.black54),
-                  ),
-                  SizedBox(height: 30),
-                  // tabbar
+
                   Container(
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -547,6 +564,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
+                          fontFamily: "TimesNewRoman"
                         ),
                       ),
                     ],

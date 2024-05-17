@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -242,7 +243,7 @@ class _DetailPageState extends State<DetailPage> {
             Positioned(
               top: 290,
               child: Container(
-                padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
                 width: MediaQuery.of(context).size.width,
                 height: 500,
                 decoration: BoxDecoration(
@@ -254,7 +255,7 @@ class _DetailPageState extends State<DetailPage> {
                 ),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -265,84 +266,181 @@ class _DetailPageState extends State<DetailPage> {
                         width: MediaQuery.of(context).size.width,
                         height: 350,
                         padding: EdgeInsets.symmetric(horizontal: 20),
-                        // decoration: BoxDecoration(
-                        //   gradient: LinearGradient(
-                        //     begin: Alignment.bottomCenter,
-                        //     end: Alignment.topCenter,
-                        //     colors: [
-                        //       Colors.teal.withOpacity(0.5),
-                        //       Colors.transparent,
-                        //     ],
-                        //   ),
-                        // ),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    FutureBuilder<String>(
-    future: _title,
-    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-    if (snapshot.hasData) {
-    final String title = snapshot.data!;
-    return Text(
-    title,
-    style: TextStyle(
-    color: Colors.black,
-    fontSize: 28,
-    fontWeight: FontWeight.bold,
-    ),
-    );
-    } else if (snapshot.hasError) {
-    return Center(
-    child: Text('Error: ${snapshot.error}'),
-    );
-    } else {
-    return Center(
-    child: CircularProgressIndicator(),
-    );
-    }
-    },
 
-    ),
-
-
-                      SizedBox(height: 20,),
-                        Text(
-                          'Description'.tr(),
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-    Expanded(
-    child: FutureBuilder<String>(
-    future: _description,
-    builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-    if (snapshot.hasData) {
-    final String description = snapshot.data!;
-    return Text(
-      description,
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-      ),
-    );
-    } else if (snapshot.hasError) {
-    return Center(
-    child: Text('Error: ${snapshot.error}'),
-    );
-    } else {
-    return Center(
-    child: CircularProgressIndicator(),
-    );
-    }
-    },
-    ),
-    ),
-
-    ],
-
-    ),
+                       child:  Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           FutureBuilder<String>(
+                             future: _title,
+                             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                               if (snapshot.hasData) {
+                                 final String title = snapshot.data!;
+                                 return Row(
+                                   children: [
+                                     Expanded(
+                                       child: Text(
+                                         title,
+                                         style: TextStyle(
+                                           color: Colors.black,
+                                           fontSize: 28,
+                                           fontWeight: FontWeight.bold,
+                                           fontFamily: "TimesNewRoman"
+                                         ),
+                                       ),
+                                     ),
+                                     RatingBar.builder(
+                                       initialRating: 4.5, // Set your initial rating here
+                                       minRating: 1,
+                                       direction: Axis.horizontal,
+                                       allowHalfRating: true,
+                                       itemCount: 5,
+                                       itemSize: 24.0,
+                                       itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                                       itemBuilder: (context, _) => Icon(
+                                         Icons.star,
+                                         color: Colors.amber,
+                                       ),
+                                       onRatingUpdate: (rating) {
+                                         print(rating);
+                                       },
+                                     ),
+                                   ],
+                                 );
+                               } else if (snapshot.hasError) {
+                                 return Center(
+                                   child: Text('Error: ${snapshot.error}'),
+                                 );
+                               } else {
+                                 return Center(
+                                   child: CircularProgressIndicator(),
+                                 );
+                               }
+                             },
+                           ),
+                           SizedBox(height: 20),
+                           Text(
+                             'Description'.tr(),
+                             style: TextStyle(
+                               fontSize: 22,
+                               fontWeight: FontWeight.bold,
+                               fontFamily: "TimesNewRoman"
+                             ),
+                           ),
+                           SizedBox(height: 10),
+                           Expanded(
+                             child: FutureBuilder<String>(
+                               future: _description,
+                               builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                                 if (snapshot.hasData) {
+                                   final String description = snapshot.data!;
+                                   return Text(
+                                     description,
+                                     style: TextStyle(
+                                       color: Colors.black,
+                                       fontSize: 16,
+                                       fontFamily: "TimesNewRoman"
+                                     ),
+                                   );
+                                 } else if (snapshot.hasError) {
+                                   return Center(
+                                     child: Text('Error: ${snapshot.error}'),
+                                   );
+                                 } else {
+                                   return Center(
+                                     child: CircularProgressIndicator(),
+                                   );
+                                 }
+                               },
+                             ),
+                           ),
+                           SizedBox(height: 20),
+                           Text(
+                             'Weather Information'.tr(),
+                             style: TextStyle(
+                               fontSize: 22,
+                               fontWeight: FontWeight.bold,
+                             ),
+                           ),
+                           SizedBox(height: 10),
+                           Row(
+                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+                             children: [
+                               Column(
+                                 children: [
+                                   Icon(
+                                     Icons.wb_sunny,
+                                     color: Colors.orange,
+                                     size: 30,
+                                   ),
+                                   SizedBox(height: 5),
+                                   Text(
+                                     'Sunlight'.tr(),
+                                     style: TextStyle(
+                                       fontSize: 14,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                   Text(
+                                     '8 hrs'.tr(),
+                                     style: TextStyle(
+                                       fontSize: 14,
+                                       color: Colors.black,
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                               Column(
+                                 children: [
+                                   Icon(
+                                     Icons.thermostat,
+                                     color: Colors.red,
+                                     size: 30,
+                                   ),
+                                   SizedBox(height: 5),
+                                   Text(
+                                     'Temperature'.tr(),
+                                     style: TextStyle(
+                                       fontSize: 14,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                   Text(
+                                     '25°C'.tr(),
+                                     style: TextStyle(
+                                       fontSize: 14,
+                                       color: Colors.black,
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                               Column(
+                                 children: [
+                                   Icon(
+                                     Icons.opacity,
+                                     color: Colors.blue,
+                                     size: 30,
+                                   ),
+                                   SizedBox(height: 5),
+                                   Text(
+                                     'Humidity'.tr(),
+                                     style: TextStyle(
+                                       fontSize: 14,
+                                       fontWeight: FontWeight.bold,
+                                     ),
+                                   ),
+                                   Text(
+                                     '60%'.tr(),
+                                     style: TextStyle(
+                                       fontSize: 14,
+                                       color: Colors.black,
+                                     ),
+                                   ),
+                                 ],
+                               ),
+                             ],
+                           ),
+                         ],
+                       ),
     ),
     ),
 
@@ -360,7 +458,7 @@ class _DetailPageState extends State<DetailPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(Icons.message, color: Colors.teal),
+                          Icon(Icons.message, color: Colors.brown),
                           SizedBox(width: 5),
                           Text(
                             'Comments',
@@ -368,7 +466,8 @@ class _DetailPageState extends State<DetailPage> {
                               fontSize: 17,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline,
-                              color: Colors.teal,
+                              color: Colors.brown,
+                              fontFamily: "TimesNewRoman"
                             ),
                           ),
                         ],
@@ -470,54 +569,3 @@ class _DetailPageState extends State<DetailPage> {
 
 
   }}
-
-// Future<void> _fetchLocationFromDatabase(int id) async {
-//   final url = 'https://ethiotravelapp.000webhostapp.com/place/index.php?id=$id';
-//
-//   try {
-//     final response = await http.get(Uri.parse(url));
-//
-//     if (response.statusCode == 200) {
-//       final data = jsonDecode(response.body);
-//
-//       final latitude = data[0]['LATITUDE'].toDouble();
-//       final longitude = data[0]['LONGITUDE'].toDouble();
-//
-//       final location = LatLng(latitude, longitude);
-//
-//       setState(() async {
-//         _center = location;
-//
-//         final MarkerId markerId = MarkerId('myMarker');
-//
-//         final Uint8List? markerIconBytes = await getBytesFromAsset('images/logo.jpg', 100);
-//         final BitmapDescriptor markerIcon = BitmapDescriptor.fromBytes(markerIconBytes!);
-//
-//         final Marker marker = Marker(
-//           markerId: markerId,
-//           position: location,
-//           icon: markerIcon,
-//           infoWindow: InfoWindow(title: 'My Marker', snippet: 'Marker Details'),
-//         );
-//
-//         _markers.clear();
-//         _markers.add(marker);
-//
-//         // Set the map type to satellite
-//         _mapType = MapType.satellite;
-//       });
-//
-//       // Animate the camera to the new position and zoom level
-//       mapController.animateCamera(CameraUpdate.newCameraPosition(
-//         CameraPosition(
-//           target: _center,
-//           zoom: 15.0,
-//         ),
-//       ));
-//     } else {
-//       print('Error: ${response.statusCode}');
-//     }
-//   } catch (e) {
-//     print('Error: $e');
-//   }
-// }

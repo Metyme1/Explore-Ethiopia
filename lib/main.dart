@@ -1,6 +1,6 @@
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:ethiopia/screens/cur.dart';
+
 import 'package:ethiopia/screens/explore.dart';
 import 'package:ethiopia/screens/google_signin.dart';
 

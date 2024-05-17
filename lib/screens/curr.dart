@@ -81,13 +81,21 @@ class _CurrencyState extends State<Currency> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(70.0), // Set the height of the AppBar
         child: AppBar(
-          backgroundColor: Colors.teal, // Set the background color of the AppBar
+          backgroundColor: Colors.brown, // Set the background color of the AppBar
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
-
+              // bottom: Radius.circular(30),
             ),
           ),
-            title: Center(child: Text('Currency Converter')),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Center(
+            child: Text('Currency Converter'),
+          ),
         ),
       ),
       body: Center(
@@ -166,7 +174,7 @@ class _CurrencyState extends State<Currency> {
                           contentPadding: EdgeInsets.symmetric(vertical: 16,
                               horizontal: 12),
                           labelStyle: TextStyle(
-                            color: Colors.teal,
+                            color: Colors.brown,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -190,7 +198,7 @@ class _CurrencyState extends State<Currency> {
               icon: Icon(Icons.swap_vert),
               label: Text('Exchange'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.teal,
+                primary: Colors.brown,
                 elevation: 5,
                 shadowColor: Colors.black,
               ),
@@ -269,7 +277,7 @@ class _CurrencyState extends State<Currency> {
                           contentPadding: EdgeInsets.symmetric(vertical: 16,
                               horizontal: 12),
                           labelStyle: TextStyle(
-                            color: Colors.teal,
+                            color: Colors.brown,
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
