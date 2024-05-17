@@ -45,7 +45,7 @@ class _CalendarConverterState extends State<CalendarConverter> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.brown,
         title: Text('Date converter'),
         centerTitle: true,
         leading: IconButton(
@@ -116,7 +116,7 @@ class _CalendarConverterState extends State<CalendarConverter> {
                       labelText: 'Day',
                       border: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.teal),
+                        borderSide: BorderSide(color: Colors.brown),
                       ),
                     ),
                   ),
@@ -160,7 +160,7 @@ class _CalendarConverterState extends State<CalendarConverter> {
                   style: TextStyle(fontSize: 16.0),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.teal,
+                  primary: Colors.brown,
                 ),
               ),
             ),
@@ -170,7 +170,7 @@ class _CalendarConverterState extends State<CalendarConverter> {
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.teal,
+                color: Colors.brown,
                 fontStyle: FontStyle.normal,
               ),
             ),
