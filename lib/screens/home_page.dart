@@ -419,7 +419,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: AppLargeText(text: "Popular sites".tr(), size: 22, color: Colors.teal),
+                      child: AppLargeText(text: "Popular sites".tr(), size: 22, color: Colors.brown),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -540,9 +540,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       SizedBox(height: 5),
               Text("Hello "+user.displayName!.tr(),
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: Colors.brown,
                 ),),]
                   ),
                 ),
@@ -692,61 +692,53 @@ class NotificationsBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 500,
-      color: Colors.brown,
+      decoration: BoxDecoration(
+        color: Colors.brown[800],
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      padding: EdgeInsets.all(20),
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height: 20),
             Text(
               'Developers',
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
+                color: Colors.white,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 10),
-            Text(
-              'Mety Million',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
+            Divider(
+              color: Colors.white54,
+              thickness: 1,
+              indent: 30,
+              endIndent: 30,
+              height: 40,
             ),
             SizedBox(height: 10),
-            Text(
-              'Beamlak Tadesse',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Bisrat Yared',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(height: 10),
-
-
-                Text(
-                  'Matyas Sina',
-                  style: TextStyle(
-                    color: Colors. white,
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(width: 30,),
-
-
-
-
-
-
+            _buildDeveloperInfo('Mety Million'),
+            _buildDeveloperInfo('Beamlak Tadesse'),
+            _buildDeveloperInfo('Bisrat Yared'),
+            _buildDeveloperInfo('Matyas Sina'),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDeveloperInfo(String name) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Text(
+        name,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
         ),
       ),
     );
