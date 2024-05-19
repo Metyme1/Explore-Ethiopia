@@ -1,9 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:ethiopia/calendar1/GregorianCalendar.dart';
-import 'package:ethiopia/screens/converter.dart';
-import 'package:ethiopia/screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:ethiopia/calendar1/GregorianCalendar.dart';
 import 'calendar1/EthiopianCalendar.dart';
+import 'screens/home_page.dart';
+import 'screens/converter.dart';
 
 class CalendarPagep extends StatefulWidget {
   @override
@@ -13,101 +12,69 @@ class CalendarPagep extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPagep> {
   EthiopianCalendar _calendar = EthiopianCalendar.now();
   List<String> _weekdayNames = [
-
+    'እሁድ',
     'ሰኞ',
     'ማክሰኞ',
     'ረቡዕ',
     'ሐሙስ',
     'ዓርብ',
     'ቅዳሜ',
-    'እሁድ',
   ];
 
   List<Widget> _buildDayCells() {
     List<Widget> cells = [];
     int daysInMonth = _calendar.daysInMonth();
-    int firstDayOfWeek = _calendar.firstDayOfWeek();
-    int prevMonthDays = _calendar.previousMonth().daysInMonth();
-    int nextMonthDays = _calendar.nextMonth().daysInMonth();
-    int prevMonthOffset = firstDayOfWeek == 0 ? 7 : firstDayOfWeek;
+    int firstDayOfWeek = (_calendar.firstDayOfWeek() % 7); // Adjust for zero-indexed weekday
 
-      for (int i = 0; i < 7; i++) {
-        cells.add(
-          Padding(
-            padding: const EdgeInsets.all(2),
-            child: Container(
-              decoration: BoxDecoration(
-                // border: Border.all(),
-                color: Colors.brown,
-                borderRadius: BorderRadius.circular(7),
-              ),
-              child: Center(
-                child: Text(
-                  _weekdayNames[i],
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+    // Add weekday headers
+    for (int i = 0; i < 7; i++) {
+      cells.add(
+        Padding(
+          padding: const EdgeInsets.all(2),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.brown,
+              borderRadius: BorderRadius.circular(7),
+            ),
+            child: Center(
+              child: Text(
+                _weekdayNames[i],
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
-        );
-      }
+        ),
+      );
+    }
 
-    // Add cells for days from previous month
-    for (int i = prevMonthDays - prevMonthOffset + 1; i <= prevMonthDays; i++) {
+    // Add empty cells for previous month's days
+    for (int i = 0; i < firstDayOfWeek; i++) {
       cells.add(
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1),
-            //border: Border.all(),
             color: Colors.transparent,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('$i', style: TextStyle(color: Colors.transparent)),
+              Text(''),
             ],
           ),
         ),
       );
     }
 
-    // // Add cells for each day of the month
-    // for (int i = 1; i <= daysInMonth; i++) {
-    //   EthiopianCalendar date = EthiopianCalendar(
-    //       year: _calendar.year, month: _calendar.month, day: i);
-    //
-    //   cells.add(
-    //     GestureDetector(
-    //       onTap: () {
-    //         setState(() {
-    //           _calendar = date;
-    //         });
-    //       },
-    //       child: Container(
-    //         decoration: BoxDecoration(
-    //           borderRadius: BorderRadius.circular(30),
-    //           // border: Border.all(),
-    //           color: date.isHoliday ? Colors.teal : null,
-    //         ),
-    //         child: Column(
-    //           crossAxisAlignment: CrossAxisAlignment.center,
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             Text('$i', style: TextStyle(fontWeight: FontWeight.bold,color:date.isHoliday? Colors.white:Colors.black)),
-    //             // Display the Gregorian date below the Ethiopian date
-    //
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
+    // Add cells for each day of the current month
     for (int i = 1; i <= daysInMonth; i++) {
       EthiopianCalendar date = EthiopianCalendar(
-          year: _calendar.year, month: _calendar.month, day: i);
+        year: _calendar.year,
+        month: _calendar.month,
+        day: i,
+      );
 
       GregorianCalendar gcDate = date.toGC();
       String gcDay = gcDate.day.toString();
@@ -128,8 +95,20 @@ class _CalendarPageState extends State<CalendarPagep> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('$i', style: TextStyle(fontWeight: FontWeight.bold, color: date.isHoliday ? Colors.white : Colors.black)),
-                Text(gcDay, style: TextStyle(fontSize: 12, color: Colors.grey[400])),
+                Text(
+                  '$i',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: date.isHoliday ? Colors.white : Colors.black,
+                  ),
+                ),
+                Text(
+                  gcDay,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[400],
+                  ),
+                ),
               ],
             ),
           ),
@@ -137,42 +116,39 @@ class _CalendarPageState extends State<CalendarPagep> {
       );
     }
 
-    // Add cells for days from next month
-
-      int numCells = cells.length;
-      int numRows = (numCells / 7).ceil() * 7;
-      int nextMonthOffset = numRows - numCells - prevMonthOffset;
-      for (int i = 1; i <= nextMonthOffset; i++) {
-        cells.add(
-          Container(
-            decoration: BoxDecoration(
-              // borderRadius: BorderRadius.circular(10),
-              //border: Border.all(),
-              color: Colors.transparent,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Text('$i', style: TextStyle(color: Colors.grey)),
-              ],
-            ),
+    // Add empty cells for next month's days to fill the grid
+    int totalCells = cells.length;
+    int remainingCells = 49 - totalCells;
+    for (int i = 1; i <= remainingCells; i++) {
+      cells.add(
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1),
+            color: Colors.transparent,
           ),
-        );
-      }
-
-    // Only keep the first 30 cells
-    cells = cells.take(48).toList();
-
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(''),
+            ],
+          ),
+        ),
+      );
+    }
 
     return cells;
   }
+
   List<EthiopianCalendar> _getMonthHolidays() {
     List<EthiopianCalendar> holidays = [];
     int daysInMonth = _calendar.daysInMonth();
 
     for (int i = 1; i <= daysInMonth; i++) {
       EthiopianCalendar date = EthiopianCalendar(
-          year: _calendar.year, month: _calendar.month, day: i);
+        year: _calendar.year,
+        month: _calendar.month,
+        day: i,
+      );
       if (date.isHoliday) {
         holidays.add(date);
       }
@@ -180,8 +156,6 @@ class _CalendarPageState extends State<CalendarPagep> {
 
     return holidays;
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -242,7 +216,8 @@ class _CalendarPageState extends State<CalendarPagep> {
                 '${_calendar.month_name} ${_calendar.year}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 30,
+                  fontFamily: "TimesNewRoman"
                 ),
               ),
               Container(

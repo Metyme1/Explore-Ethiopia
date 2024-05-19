@@ -116,11 +116,13 @@ class Bahirehasab {
     Map<String, dynamic> mebajaHamer = nenewe;
     List result = [];
     _yebealTewsak.forEach((beal, numOfDays) {
+      int newMonthIndex = months.indexOf(mebajaHamer['month']) +
+          ((mebajaHamer['date'] + numOfDays) ~/ 30) as int;
+      newMonthIndex = newMonthIndex % months.length; // Ensure month index wraps around
       result.add({
         "beal": beal,
         "day": {
-          "month": months[months.indexOf(mebajaHamer['month']) +
-              (mebajaHamer['date'] + numOfDays) ~/ 30 as int],
+          "month": months[newMonthIndex],
           "date": (mebajaHamer['date'] + numOfDays) % 30 == 0
               ? 30
               : (mebajaHamer['date'] + numOfDays) % 30
@@ -145,9 +147,11 @@ class Bahirehasab {
       if (status) {
         Map<String, dynamic> mebajaHamer = nenewe;
         int? target = _yebealTewsak[holiday_name];
+        int newMonthIndex = months.indexOf(mebajaHamer['month']) +
+            ((mebajaHamer['date'] + target) ~/ 30) as int;
+        newMonthIndex = newMonthIndex % months.length; // Ensure month index wraps around
         beal = {
-          "month": months[months.indexOf(mebajaHamer['month']) +
-              ((mebajaHamer['date'] + target) ~/ 30) as int],
+          "month": months[newMonthIndex],
           "date": (mebajaHamer['date'] + target) % 30 == 0
               ? 30
               : (mebajaHamer['date'] + target) % 30
