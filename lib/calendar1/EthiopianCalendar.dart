@@ -18,8 +18,6 @@ class EthiopianCalendar {
     this.isHoliday = holiday_name != "" ? true : false;
   }
 
-
-
   EthiopianCalendar.now() {
     var fixed = fixedFromUnix(DateTime.now().millisecondsSinceEpoch);
     this.year = ((4 * (fixed - ethiopicEpoch) + 1463) ~/ 1461);
@@ -37,13 +35,13 @@ class EthiopianCalendar {
   GregorianCalendar toGC() {
     return new GregorianCalendar(
         year: DateTime.fromMillisecondsSinceEpoch(
-                dateToEpoch(this.year!, this.month!, this.day!))
+            dateToEpoch(this.year!, this.month!, this.day!))
             .year,
         month: DateTime.fromMillisecondsSinceEpoch(
-                dateToEpoch(this.year!, this.month!, this.day!))
+            dateToEpoch(this.year!, this.month!, this.day!))
             .month,
         day: DateTime.fromMillisecondsSinceEpoch(
-                dateToEpoch(this.year!, this.month!, this.day!))
+            dateToEpoch(this.year!, this.month!, this.day!))
             .day);
   }
 
@@ -68,13 +66,6 @@ class EthiopianCalendar {
         year: this.year! + 1, month: this.month, day: this.day);
   }
 
-  // thisYear() {
-  //   // return EthiopianCalendar(
-  //   //     year: this.year!, month: this.month, day: this.day);
-  //   String current_day = '$this.year : $this.month : $this.day';
-  //   return current_day;
-  // }
-
   EthiopianCalendar currentDay() {
     return EthiopianCalendar(
         year: this.year!, month: this.month, day: this.day);
@@ -96,33 +87,29 @@ class EthiopianCalendar {
   }
 
   bool isLeapYear(int year) {
-    // A year is a leap year if it is divisible by 4 and not divisible by 100,
-    // or if it is divisible by 400
-    return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    // Ethiopian leap year logic: Every 4 years except the year before the Gregorian leap year
+    return (year % 4 == 3);
   }
 
-  // int firstDayOfWeek() {
-  //   var epochDay = fixedFromEthiopic(this.year!, this.month!, 1) - 1;
-  //   // The Ethiopic calendar has a 7-day week
-  //   return (epochDay + 3) % 7;
-  // }
   int firstDayOfWeek() {
     // Calculate the epoch day of the first day of the current month
     int epochDay = fixedFromEthiopic(year!, month!, 1) - 1;
-
-    // Calculate the number of leap days in the current year up to the current month
-    int leapDays = 0;
-    for (int i = 1; i < month!; i++) {
-      if (i == 13 && isLeapYear(year!)) {
-        leapDays += 1;
-      }
-      leapDays += 1;
-    }
-
-    // Calculate the first day of the week by adding the epoch day and leap days
-    // to an offset of 3 (corresponding to September 1st, 8 CE, in the Julian calendar)
-    int firstDayOfWeek = (epochDay + leapDays + 3) % 7;
-
-    return firstDayOfWeek;
+    // The Ethiopic calendar has a 7-day week
+    return (epochDay + 3) % 7;
   }
 }
+
+// thisYear() {
+//   // return EthiopianCalendar(
+//   //     year: this.year!, month: this.month, day: this.day);
+//   String current_day = '$this.year : $this.month : $this.day';
+//   return current_day;
+// }
+
+
+
+// int firstDayOfWeek() {
+//   var epochDay = fixedFromEthiopic(this.year!, this.month!, 1) - 1;
+//   // The Ethiopic calendar has a 7-day week
+//   return (epochDay + 3) % 7;
+// }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ethiopia/calendar1/GregorianCalendar.dart';
-import 'calendar1/EthiopianCalendar.dart';
+import 'package:ethiopia/calendar1/EthiopianCalendar.dart';
 import 'screens/home_page.dart';
 import 'screens/converter.dart';
 
@@ -24,7 +23,7 @@ class _CalendarPageState extends State<CalendarPagep> {
   List<Widget> _buildDayCells() {
     List<Widget> cells = [];
     int daysInMonth = _calendar.daysInMonth();
-    int firstDayOfWeek = (_calendar.firstDayOfWeek() % 7); // Adjust for zero-indexed weekday
+    int firstDayOfWeek = (_calendar.firstDayOfWeek() % 7+5); // Adjust for zero-indexed weekday
 
     // Add weekday headers
     for (int i = 0; i < 7; i++) {
@@ -76,9 +75,6 @@ class _CalendarPageState extends State<CalendarPagep> {
         day: i,
       );
 
-      GregorianCalendar gcDate = date.toGC();
-      String gcDay = gcDate.day.toString();
-
       cells.add(
         GestureDetector(
           onTap: () {
@@ -100,13 +96,6 @@ class _CalendarPageState extends State<CalendarPagep> {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: date.isHoliday ? Colors.white : Colors.black,
-                  ),
-                ),
-                Text(
-                  gcDay,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey[400],
                   ),
                 ),
               ],
@@ -156,10 +145,10 @@ class _CalendarPageState extends State<CalendarPagep> {
 
     return holidays;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         backgroundColor: Colors.brown,
         title: Center(child: Text('Ethiopian Calendar')),
@@ -177,16 +166,17 @@ class _CalendarPageState extends State<CalendarPagep> {
             icon: Icon(Icons.compare_arrows),
             onPressed: () {
               Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CalendarConverter()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CalendarConverter()),
+              );
             },
           ),
         ],
       ),
       body: Column(
         children: [
-          SizedBox(height: 20,),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -207,7 +197,7 @@ class _CalendarPageState extends State<CalendarPagep> {
                   },
                   padding: EdgeInsets.zero,
                   constraints: BoxConstraints(),
-                  splashRadius:20,
+                  splashRadius: 20,
                   iconSize: 30,
                   color: Colors.black,
                 ),
@@ -217,7 +207,7 @@ class _CalendarPageState extends State<CalendarPagep> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
-                  fontFamily: "TimesNewRoman"
+                  fontFamily: "TimesNewRoman",
                 ),
               ),
               Container(
@@ -242,10 +232,9 @@ class _CalendarPageState extends State<CalendarPagep> {
                   color: Colors.black,
                 ),
               ),
-
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(height: 20),
           SizedBox(height: 16),
           GridView.count(
             padding: EdgeInsets.all(8.0),
@@ -256,7 +245,6 @@ class _CalendarPageState extends State<CalendarPagep> {
             children: _buildDayCells(),
           ),
           SizedBox(height: 16),
-
           Expanded(
             child: Container(
               color: Colors.white,
@@ -284,7 +272,6 @@ class _CalendarPageState extends State<CalendarPagep> {
                           width: 60,
                           padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                           decoration: BoxDecoration(
-
                             border: Border(
                               right: BorderSide(
                                 color: Colors.brown,
@@ -313,7 +300,6 @@ class _CalendarPageState extends State<CalendarPagep> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-
                               ],
                             ),
                           ),
@@ -327,7 +313,6 @@ class _CalendarPageState extends State<CalendarPagep> {
           ),
         ],
       ),
-
     );
   }
 }
