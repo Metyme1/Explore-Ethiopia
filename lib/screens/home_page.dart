@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             ),
 
             title:Text(
-                'Discover',
+                'Discover'.tr(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30, // Set the font size of the title
@@ -491,7 +491,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                     ),
                                     SizedBox(height: 10),
                                     AppText(
-                                      text: names[index],
+                                      text: names[index].tr(),
                                       color: Colors.black87,
                                       size: 18,
                                       weight: FontWeight.bold,
@@ -504,7 +504,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                                           children: [
                                             SizedBox(width: 5),
                                             AppText(
-                                              text:locations[index],
+                                              text:locations[index].tr(),
                                               color: Colors.grey,
                                               size: 16,
                                             ),

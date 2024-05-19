@@ -239,6 +239,7 @@ class _ExploreState extends State<Explore> {
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
                         fontSize: 18,
+                        fontFamily: "TimesNewRoman",
                         shadows: [
                           Shadow(
                             color: Colors.black.withOpacity(0.5),
