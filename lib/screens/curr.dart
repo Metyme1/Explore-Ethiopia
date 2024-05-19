@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -7,12 +9,6 @@ class Currency extends StatefulWidget {
 
   @override
   State<Currency> createState() => _CurrencyState();
-}
-
-
-class _Currency extends StatefulWidget {
-  @override
-  _CurrencyState createState() => _CurrencyState();
 }
 
 class _CurrencyState extends State<Currency> {
@@ -34,7 +30,6 @@ class _CurrencyState extends State<Currency> {
     'GBP',
     'AUD',
     'BRL'
-
   ];
 
   Future<void> _convertCurrency(String fromCurrency, String amount, String toCurrency) async {
@@ -44,6 +39,9 @@ class _CurrencyState extends State<Currency> {
       'X-RapidAPI-Key': 'f0bc241e31mshbb59e761d9eb84ap143052jsn93486e4a07a0',
       'X-RapidAPI-Host': 'currency-converter-by-api-ninjas.p.rapidapi.com'
     };
+
+    print('Request URL: $url');
+    print('Headers: $headers');
 
     try {
       final response = await http.get(url, headers: headers);
@@ -59,6 +57,7 @@ class _CurrencyState extends State<Currency> {
         });
       } else {
         print('API request failed with status code ${response.statusCode}');
+        print('Response body: ${response.body}');
         // Display error message to user
         setState(() {
           _result = 'Error: ${response.statusCode}';
@@ -171,8 +170,7 @@ class _CurrencyState extends State<Currency> {
                         decoration: InputDecoration(
                           labelText: 'Amount',
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 16,
-                              horizontal: 12),
+                          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                           labelStyle: TextStyle(
                             color: Colors.brown,
                             fontSize: 18,
@@ -190,10 +188,14 @@ class _CurrencyState extends State<Currency> {
             ElevatedButton.icon(
               onPressed: () async {
                 String fromAmount = _fromAmountController.text.toString();
-                if (fromAmount.isEmpty) return;
-                await _convertCurrency(
-                    _fromCurrency, fromAmount ,_toCurrency);
-
+                if (fromAmount.isEmpty || double.tryParse(fromAmount) == null) {
+                  setState(() {
+                    _result = 'Please enter a valid amount';
+                    _toAmountController.text = '';
+                  });
+                  return;
+                }
+                await _convertCurrency(_fromCurrency, fromAmount, _toCurrency);
               },
               icon: Icon(Icons.swap_vert),
               label: Text('Exchange'),
@@ -249,7 +251,6 @@ class _CurrencyState extends State<Currency> {
                     ),
                   ),
                 ),
-
                 SizedBox(width: 16),
                 Expanded(
                   child: Container(
@@ -269,13 +270,11 @@ class _CurrencyState extends State<Currency> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: TextFormField(
                         controller: _toAmountController,
-
                         readOnly: true,
                         decoration: InputDecoration(
                           labelText: 'Converted Amount',
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 16,
-                              horizontal: 12),
+                          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
                           labelStyle: TextStyle(
                             color: Colors.brown,
                             fontSize: 18,
@@ -289,13 +288,11 @@ class _CurrencyState extends State<Currency> {
               ],
             ),
             SizedBox(height: 24),
-
           ],
         ),
       ),
     );
   }
-
   String getCurrencyFlag(String currencyCode) {
     switch (currencyCode) {
       case 'USD':
