@@ -187,7 +187,7 @@ class _ExploreState extends State<Explore> {
                 fit: BoxFit.cover,
                 filterQuality: FilterQuality.high,
                 colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.5),
+                  Colors.black.withOpacity(0.8),
                   BlendMode.darken,
                 ),
               ),
@@ -207,7 +207,7 @@ class _ExploreState extends State<Explore> {
                   value: value.substring(0, 2).toLowerCase(),
                   child: Text(
                     value,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white60),
                   ),
                 );
               }).toList(),
@@ -237,8 +237,8 @@ class _ExploreState extends State<Explore> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
-                        color: Colors.white,
-                        fontSize: 18,
+                        color: Colors.white60,
+                        fontSize: 40,
                         fontFamily: "TimesNewRoman",
                         shadows: [
                           Shadow(
